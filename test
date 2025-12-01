@@ -1,1 +1,40 @@
-https://www.figma.com/design/V7Y7aYXRjXjMQZtS7MSLby/Mrkt-Components?node-id=13793-39390&t=duXRQbbwvXZpAls1-0
+✅ TC01 – Verify “Product” and “Solution” facets appear under Content Type
+
+Steps:
+
+Navigate to the Search Page.
+
+Check the Content Type section in the left filter panel.
+Expected Result:
+
+“Product” and “Solution” facets are visible and listed alphabetically.
+
+✅ TC02 – Verify filtering by Product and Solution returns correct results
+
+Steps:
+
+Click Product under Content Type.
+
+Observe search results.
+
+Clear Product and click Solution.
+Expected Result:
+
+Product filter shows only pages with Page Location = Products.
+
+Solution filter shows only pages with Page Location = Solutions.
+
+No irrelevant pages appear.
+
+✅ TC03 – Verify facets work for all languages
+
+Steps:
+
+Change site language (EN → FR → JP → etc.).
+
+Navigate to the Search Page.
+
+Check the Content Type section.
+Expected Result:
+
+“Product” and “Solution” facets appear correctly in each language and behave the same when filtering.

@@ -1,1 +1,42 @@
-Verifying that pages like /top/products no longer load and only the correct canonical URLs are accessible.
+Bug: Product and Solution Facets Disappear After Switching Browser Tabs
+Summary:
+
+Product and Solution facets disappear from the Content Type section after switching between Chrome browser tabs while the F5.com filter is selected.
+
+Environment:
+
+Browser: Chrome (latest)
+
+Page: Search Page
+
+Filter applied: F5.com
+
+Repro Steps:
+
+Navigate to the Search Page.
+
+In the left filter panel, select the F5.com filter.
+
+Confirm that Product and Solution facets appear under Content Type.
+
+Switch to another Chrome browser tab.
+
+Return back to the Search page tab.
+
+Actual Result:
+
+Product and Solution facets disappear from the Content Type section.
+
+The facet list reloads incomplete or incorrectly.
+
+Expected Result:
+
+Product and Solution facets should remain visible and consistent after switching tabs.
+
+Facets should not reset, disappear, or change state unless manually modified by the user.
+
+Impact:
+
+Users cannot reliably filter search results by Product or Solution.
+
+Inconsistent UI behavior impacts usability and search accuracy.

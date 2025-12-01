@@ -1,1 +1,1 @@
-While testing the new Product/Solution facets, I noticed that after selecting the F5.com filter, switching browser tabs causes the facets to disappear
+Verifying that pages like /top/products no longer load and only the correct canonical URLs are accessible.

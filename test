@@ -1,3 +1,1 @@
-QA Observation Comment
-
-When navigating to the Search Page and selecting the F5.com filter, the Product and Solution facets initially appear as expected. However, after switching to another browser tab in Chrome and returning back, both facets disappear from the Content Type section. This behavior is inconsistent and needs investigation.
+While testing the new Product/Solution facets, I noticed that after selecting the F5.com filter, switching browser tabs causes the facets to disappear

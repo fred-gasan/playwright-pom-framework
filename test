@@ -1,1 +1,2 @@
-Add carousel design tokens, responsive validation tests, and visual regression tests across breakpoints
+QA Pass Comment:
+"Validated that top-level generic pages are no longer generated under /top/ path. Confirmed unique URLs for pages like f5.com/products and verified no duplicate variations (e.g., /top/products). All checks passed and the fix works as expected."

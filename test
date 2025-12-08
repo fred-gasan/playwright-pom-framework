@@ -1,20 +1,4 @@
-Content Editor
-
-Given a page in sanity with an Icon + Text Component, 
-When I open the component for editing, 
-then I have the option to select text placement as follows: 
-
-Above text (default)
-Left of text
-
-Website Visitor
-Given a page on the FE with an Icon + Text Component,
-and Given the CE has selected the text placement option ABOVE TEXT,
-When the page loads in ANY breakpoint size, 
-Then I see the icon appears above the text and centered withe the text beneath.
-
-Given a page on the FE with an Icon + Text Component,
-and Given the CE has selected the text placement option LEFT OF TEXT,
-When the page loads,
-ThenI see the following for the noted breakpoints: 
-at Med, Large, XL sizes: icon appears to the left of the text.
+Validated new Icon Placement field in Sanity (Above Text default, Left of Text).
+On FE, Above Text renders icon above and centered across all breakpoints.
+Left of Text displays icon to the left of text correctly on Medium, Large, and XL breakpoints.
+All ACs passed.

@@ -1,4 +1,3 @@
-Validated new Icon Placement field in Sanity (Above Text default, Left of Text).
-On FE, Above Text renders icon above and centered across all breakpoints.
-Left of Text displays icon to the left of text correctly on Medium, Large, and XL breakpoints.
-All ACs passed.
+While testing the updated Icon + Text component, I identified an inconsistency in the FE rendering. In Sanity, the default value “Above text” is selected and the changes are published, but on the UI the component automatically displays the layout as “Left of text.” The FE is not honoring the selected placement and shows the icon on the left even though “Above text” is configured.
+
+Notably, when I tested this yesterday, the behavior matched the AC and the UI correctly reflected the selected placement. Today, the same configuration no longer produces the expected result.

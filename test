@@ -1,147 +1,20 @@
-Bu tiketin əsas məqsədi:
+Content Editor
 
-1. Sanity-də Content Editor üçün yeni seçim gəlir
+Given a page in sanity with an Icon + Text Component, 
+When I open the component for editing, 
+then I have the option to select text placement as follows: 
 
-“Icon Placement” adlı əlavə field olacaq.
-
-2 seçim olmalıdır:
-
-Above text (centered) → DEFAULT
-
+Above text (default)
 Left of text
 
-“Right of text” olmamalıdır.
-
-Burada test etməli olduğun:
-
-Field görünür?
-
-Default doğru təyin olunub?
-
-Option-lar düzgün siyahıda?
-
-Yanlış, artıq option yoxdur?
-
-2. FE – Seçimə görə komponent doğru render olur
-
-Sanity-də seçilən placement FE-də real saytda düzgün əks olunmalıdır:
-
-Sanity seçimi	Gözlənilən FE davranışı
-Above text (centered)	Icon text-in üstündə, ortada align olunmuş görünməlidir. (Go Page və Solutions page-dəki nümunə kimi)
-Left of text	Icon text-in solunda olmalıdır, spacing düzgün, alignment düzgün.
-3. Column layout qaydaları
-
-Bu hissə original tiketin qalıq requirement-ləridir və hələ də keçərlidir:
-
-3 və ya daha çox sütunlu layout olarsa → icon + text avtomatik vertical (icon üstündə) layout-a keçməli
-
-Bu vertical layout → horizontal olaraq center edilməlidir
-
-Hazırda bu yalnız XS viewportlarda edir → amma artıq 3+ columns layout üçün də etməlidir
-
-Test etməli olduğun:
-
-Column sayını dəyişdikdə düzgün layout switch baş verir?
-
-Desktop, tablet, XS-də davranış uyğundur?
-
-✅ DƏqiq Test Ssenariləri
-🔹 TEST CASE 1 — Sanity-də Icon Placement field-in doğrulanması (Backend)
-
-Steps
-
-Sanity Studio aç.
-
-TEXT + ICON component yaradıb/Edit et.
-
-"Icon Placement" field-inə bax.
-
-Expected Result
-
-Field görünür.
-
-Default value → Above text (centered).
-
-Dropdown values:
-
-Above text (centered)
-
-Left of text
-
-Right of text yoxdur.
-
-🔹 TEST CASE 2 — FE: Above Text (Centered) seçiminin render olunması
-
-Steps
-
-Sanity-də “Above text (centered)” seç.
-
-Preview və ya test mühitində həmin komponenti aç.
-
-Icon və text-in layout-unun dizayn ilə uyğunluğunu yoxla.
-
-Expected Result
-
-Icon text-in üstündə görünməlidir.
-
-Icon center-align olmalıdır.
-
-Spacing və padding dizayna uyğun olmalıdır.
-
-Go Pages və Solutions Pages örnəklərindəki görünüşlə eyni olmalıdır.
-
-🔹 TEST CASE 3 — FE: Left of Text seçiminin render olunması
-
-Steps
-
-Sanity-də “Left of text” seç.
-
-Preview və ya prod/test environment-də komponenti aç.
-
-Expected Result
-
-Icon text-in solunda görünməlidir.
-
-Icon və text arasında spacing düzgündür.
-
-Responsive olaraq align pozulmur.
-
-🔹 TEST CASE 4 — 3+ sütunda layout dəyişməsi (Original requirement)
-
-Steps
-
-TEXT + ICON komponentini Page Builder-də 3 və ya daha çox sütunda istifadə et.
-
-Saytı aç və komponenti vizual olaraq yoxla.
-
-Expected Result
-
-Icon + text vertical layout-a keçməlidir → icon üst, text alt.
-
-Content mərkəzə align edilmiş görünməlidir.
-
-XS viewports-da bu davranış artıq mövcuddur, amma desktop/tablet-də 3+ sütunda da eyni olunmalıdır.
-
-🔹 TEST CASE 5 — Responsive Testing
-
-Breakpoints test et:
-
-Desktop
-
-Tablet
-
-Mobile
-
-Expected Result
-
-All layouts follow the rules consistently.
-
-No misalignment, overlap, or spacing issues.
-
-📝 QA Observation / Notes (Standup və ya Ticket Comment üçün)
-
-"Sanity-də iki icon placement option-u əlavə olunub və default olaraq 'Above text (centered)' gəlir. FE-də placement seçiminə uyğun layout düzgün dəyişir. 3+ sütunlu layoutlarda vertical alignment requirement-i də tesdiqləndi. Responsive behavior hər breakpoint-də uyğundur."
-
-🟢 QA Pass Comment (hazır da verirəm)
-
-"All acceptance criteria validated. Icon placement options appear in Sanity with correct default value, and FE correctly renders layouts based on the selection. Vertical layout and centering behavior for 3+ column configurations confirmed. No UI/UX inconsistencies found. Ready for release."
+Website Visitor
+Given a page on the FE with an Icon + Text Component,
+and Given the CE has selected the text placement option ABOVE TEXT,
+When the page loads in ANY breakpoint size, 
+Then I see the icon appears above the text and centered withe the text beneath.
+
+Given a page on the FE with an Icon + Text Component,
+and Given the CE has selected the text placement option LEFT OF TEXT,
+When the page loads,
+ThenI see the following for the noted breakpoints: 
+at Med, Large, XL sizes: icon appears to the left of the text.

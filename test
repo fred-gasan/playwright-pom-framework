@@ -1,33 +1,147 @@
-As a Content Editor, I want the additional option to select icon placement in the TEXT + ICON component so that I can achieve designs for both go pages and solutions. 
+Bu tiketin əsas məqsədi:
 
-New Requirement: 
+1. Sanity-də Content Editor üçün yeni seçim gəlir
 
-In Sanity, Content Editor can select icon placement relevant to the text: 
-"Above text (centered)" - DEFAULT
-"Left of text" - right side not required as option
-Examples: 
-Go page with Icon placed BESIDE TEXT: F5 Academy Presents Securing Your Apps and APIs with F5 | F5
+“Icon Placement” adlı əlavə field olacaq.
 
-Image
+2 seçim olmalıdır:
 
+Above text (centered) → DEFAULT
 
-Solutions page (snip from AEM) with icon placement ABOVE text - want to be able to do this: 
-Image
-current page on F5.com here BIG-IP SSL Orchestrator | F5
+Left of text
 
+“Right of text” olmamalıdır.
 
-WORK: 
-BE: add in the options in Sanity 
-FE: depending on the selections made in Sanity, see them reflected
-___________________________________________________________________________________________________________________
-Original ticket --- I think we can remove, but please confirm @Ian Gahagan and @Tracie Blood 
+Burada test etməli olduğun:
 
-The icon+text component has a couple issues that need to be resolved for design consistency. Tested on the following page: https://www.f5.com/products/big-ip-services/ssl-orchestrator#capabilities. 
+Field görünür?
 
-When using icon+text in a column layout of 3 or greater, the icon and text should move to a vertical layout (icon above the text)
-When icon+text moves to a vertical layout it should center horizontally. Currently this applies to only to XS viewports, but should also apply to the above column layout scenario
-Screenshots of existing treatments:
+Default doğru təyin olunub?
 
-Screenshot 2025-11-18 at 8.41.04 AM.png
+Option-lar düzgün siyahıda?
 
-Screenshot 2025-11-18 at 8.45.50 AM.png
+Yanlış, artıq option yoxdur?
+
+2. FE – Seçimə görə komponent doğru render olur
+
+Sanity-də seçilən placement FE-də real saytda düzgün əks olunmalıdır:
+
+Sanity seçimi	Gözlənilən FE davranışı
+Above text (centered)	Icon text-in üstündə, ortada align olunmuş görünməlidir. (Go Page və Solutions page-dəki nümunə kimi)
+Left of text	Icon text-in solunda olmalıdır, spacing düzgün, alignment düzgün.
+3. Column layout qaydaları
+
+Bu hissə original tiketin qalıq requirement-ləridir və hələ də keçərlidir:
+
+3 və ya daha çox sütunlu layout olarsa → icon + text avtomatik vertical (icon üstündə) layout-a keçməli
+
+Bu vertical layout → horizontal olaraq center edilməlidir
+
+Hazırda bu yalnız XS viewportlarda edir → amma artıq 3+ columns layout üçün də etməlidir
+
+Test etməli olduğun:
+
+Column sayını dəyişdikdə düzgün layout switch baş verir?
+
+Desktop, tablet, XS-də davranış uyğundur?
+
+✅ DƏqiq Test Ssenariləri
+🔹 TEST CASE 1 — Sanity-də Icon Placement field-in doğrulanması (Backend)
+
+Steps
+
+Sanity Studio aç.
+
+TEXT + ICON component yaradıb/Edit et.
+
+"Icon Placement" field-inə bax.
+
+Expected Result
+
+Field görünür.
+
+Default value → Above text (centered).
+
+Dropdown values:
+
+Above text (centered)
+
+Left of text
+
+Right of text yoxdur.
+
+🔹 TEST CASE 2 — FE: Above Text (Centered) seçiminin render olunması
+
+Steps
+
+Sanity-də “Above text (centered)” seç.
+
+Preview və ya test mühitində həmin komponenti aç.
+
+Icon və text-in layout-unun dizayn ilə uyğunluğunu yoxla.
+
+Expected Result
+
+Icon text-in üstündə görünməlidir.
+
+Icon center-align olmalıdır.
+
+Spacing və padding dizayna uyğun olmalıdır.
+
+Go Pages və Solutions Pages örnəklərindəki görünüşlə eyni olmalıdır.
+
+🔹 TEST CASE 3 — FE: Left of Text seçiminin render olunması
+
+Steps
+
+Sanity-də “Left of text” seç.
+
+Preview və ya prod/test environment-də komponenti aç.
+
+Expected Result
+
+Icon text-in solunda görünməlidir.
+
+Icon və text arasında spacing düzgündür.
+
+Responsive olaraq align pozulmur.
+
+🔹 TEST CASE 4 — 3+ sütunda layout dəyişməsi (Original requirement)
+
+Steps
+
+TEXT + ICON komponentini Page Builder-də 3 və ya daha çox sütunda istifadə et.
+
+Saytı aç və komponenti vizual olaraq yoxla.
+
+Expected Result
+
+Icon + text vertical layout-a keçməlidir → icon üst, text alt.
+
+Content mərkəzə align edilmiş görünməlidir.
+
+XS viewports-da bu davranış artıq mövcuddur, amma desktop/tablet-də 3+ sütunda da eyni olunmalıdır.
+
+🔹 TEST CASE 5 — Responsive Testing
+
+Breakpoints test et:
+
+Desktop
+
+Tablet
+
+Mobile
+
+Expected Result
+
+All layouts follow the rules consistently.
+
+No misalignment, overlap, or spacing issues.
+
+📝 QA Observation / Notes (Standup və ya Ticket Comment üçün)
+
+"Sanity-də iki icon placement option-u əlavə olunub və default olaraq 'Above text (centered)' gəlir. FE-də placement seçiminə uyğun layout düzgün dəyişir. 3+ sütunlu layoutlarda vertical alignment requirement-i də tesdiqləndi. Responsive behavior hər breakpoint-də uyğundur."
+
+🟢 QA Pass Comment (hazır da verirəm)
+
+"All acceptance criteria validated. Icon placement options appear in Sanity with correct default value, and FE correctly renders layouts based on the selection. Vertical layout and centering behavior for 3+ column configurations confirmed. No UI/UX inconsistencies found. Ready for release."

@@ -1,44 +1,33 @@
-Test Case: Verify New “Application Security” Subdirectory is Created Under Learning Center in Sanity (Backend Only)
+As a Content Editor, I want the additional option to select icon placement in the TEXT + ICON component so that I can achieve designs for both go pages and solutions. 
 
-Title:
-Verify creation and structure of the “Application Security” subdirectory under Learning Center in Sanity
+New Requirement: 
 
-Preconditions:
+In Sanity, Content Editor can select icon placement relevant to the text: 
+"Above text (centered)" - DEFAULT
+"Left of text" - right side not required as option
+Examples: 
+Go page with Icon placed BESIDE TEXT: F5 Academy Presents Securing Your Apps and APIs with F5 | F5
 
-Access to Sanity Studio backend.
-
-Learning Center root directory already exists.
-
-Test Steps:
-
-Open Sanity Studio and navigate to:
-Generic Content Pages → Learning Center.
-
-Validate that a new subdirectory named “Application Security” is present.
-
-Open the “Application Security” directory and verify:
-
-Folder loads without schema errors
-
-Backend schema fields match the existing Learning Center subdirectory structure (AI, Application Delivery, Training).
-
-Create a test child page under “Application Security” and check the generated slug/path.
-
-Expected Result:
-
-“Application Security” directory is successfully created under Learning Center.
-
-Folder structure and schema match other Learning Center subdirectories.
-
-Child page generates correct backend path in slug:
-/learn/application-security/[child-page]
-
-No validation or schema errors occur.
+Image
 
 
+Solutions page (snip from AEM) with icon placement ABOVE text - want to be able to do this: 
+Image
+current page on F5.com here BIG-IP SSL Orchestrator | F5
 
-QA Comment
 
-QA has validated that the new “Application Security” subdirectory is successfully created under Learning Center in Sanity. The folder loads correctly with no schema errors, matches the structure of other Learning Center subdirectories, and child pages generate the expected backend slug format:
-/learn/application-security/[child-page].
-Everything is working as expected.
+WORK: 
+BE: add in the options in Sanity 
+FE: depending on the selections made in Sanity, see them reflected
+___________________________________________________________________________________________________________________
+Original ticket --- I think we can remove, but please confirm @Ian Gahagan and @Tracie Blood 
+
+The icon+text component has a couple issues that need to be resolved for design consistency. Tested on the following page: https://www.f5.com/products/big-ip-services/ssl-orchestrator#capabilities. 
+
+When using icon+text in a column layout of 3 or greater, the icon and text should move to a vertical layout (icon above the text)
+When icon+text moves to a vertical layout it should center horizontally. Currently this applies to only to XS viewports, but should also apply to the above column layout scenario
+Screenshots of existing treatments:
+
+Screenshot 2025-11-18 at 8.41.04 AM.png
+
+Screenshot 2025-11-18 at 8.45.50 AM.png

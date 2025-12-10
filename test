@@ -1,10 +1,9 @@
-I tested the Hero component behavior based on the updated acceptance criteria.
-During validation, the hero height and layout logic worked correctly for all scenarios:
+I completed testing for the Sanity updates from the 12/4 session. All expected schema and navigation changes behave correctly:
 
-When the page met one or more tall conditions (100-level or ≥1 CTA), the hero consistently displayed as Tall (≥500px).
+The new Last Modified Date field is now visible on Generic Content Pages and saves as expected.
 
-When the page met none of the tall conditions, the hero displayed as Short (≥300px) as expected.
+Lister Pages continue to display the Publication Date as intended.
 
-Pages configured with the specific abstract conditions (not 100-level, any number of CTAs, abstract present) rendered with the correct layout rules defined for this configuration.
+The folder name update from “Landing Pages” to “Lister Pages” is reflected in the Sanity navigation, and all documents load with no issues.
 
-All tests passed, and the actual results match the acceptance criteria. Let me know if any additional edge cases should be added to the regression suite.
+Everything matches the requirements, and no blocking issues were found.

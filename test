@@ -1,3 +1,10 @@
-While testing the updated Icon + Text component, I identified an inconsistency in the FE rendering. In Sanity, the default value “Above text” is selected and the changes are published, but on the UI the component automatically displays the layout as “Left of text.” The FE is not honoring the selected placement and shows the icon on the left even though “Above text” is configured.
+I tested the Hero component behavior based on the updated acceptance criteria.
+During validation, the hero height and layout logic worked correctly for all scenarios:
 
-Notably, when I tested this yesterday, the behavior matched the AC and the UI correctly reflected the selected placement. Today, the same configuration no longer produces the expected result.
+When the page met one or more tall conditions (100-level or ≥1 CTA), the hero consistently displayed as Tall (≥500px).
+
+When the page met none of the tall conditions, the hero displayed as Short (≥300px) as expected.
+
+Pages configured with the specific abstract conditions (not 100-level, any number of CTAs, abstract present) rendered with the correct layout rules defined for this configuration.
+
+All tests passed, and the actual results match the acceptance criteria. Let me know if any additional edge cases should be added to the regression suite.

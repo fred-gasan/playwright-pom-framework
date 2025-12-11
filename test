@@ -1,4 +1,79 @@
-I reviewed the Featured Blog Posts section and validated the fix for the card shadow visibility issue. Previously, the left and right card shadows were being cut off due to container overflow and max-width constraints. After the update, the card shadows now render fully on both sides as expected and match the Figma reference. The component respects max content width, and no visual clipping or layout shifting is observed.
-
-All breakpoints were checked, and the shadows remain visible across responsive sizes.
-Marking this ticket as PASS.
+{
+  "homepage": {
+    "hero": {
+      "containerMaxWidth": "1440px",
+      "paddingTopDesktop": "0px",
+      "paddingBottomDesktop": "0px",
+      "paddingTopMobile": "48px",
+      "paddingBottomMobile": "48px",
+      "titleFontSizeDesktop": "56px",
+      "titleLineHeightDesktop": "70px",
+      "titleFontSizeMobile": "32px",
+      "titleLineHeightMobile": "40px",
+      "subtitleFontSizeDesktop": "20px",
+      "subtitleLineHeightDesktop": "28px",
+      "imageHeightDesktop": "520px",
+      "imageHeightMobile": "280px",
+      "buttonHeight": "46px",
+      "buttonBorderRadius": "5px",
+      "buttonPaddingX": "24px",
+      "buttonFontSize": "18px"
+    },
+    "carousel": {
+      "HD+": {
+        "width": "1728px",
+        "height": "96px",
+        "paddingTop": "16px",
+        "paddingBottom": "16px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px",
+        "gap": "10px"
+      },
+      "XL": {
+        "width": "1366px",
+        "height": "106px",
+        "paddingTop": "16px",
+        "paddingBottom": "16px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px",
+        "gap": "10px"
+      },
+      "LG": {
+        "width": "1024px",
+        "height": "103px",
+        "paddingTop": "16px",
+        "paddingBottom": "16px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px",
+        "gap": "10px"
+      },
+      "MD": {
+        "width": "834px",
+        "height": "86px",
+        "paddingTop": "16px",
+        "paddingBottom": "16px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px",
+        "gap": "10px"
+      },
+      "SM": {
+        "width": "744px",
+        "height": "113.5px",
+        "paddingTop": "16px",
+        "paddingBottom": "16px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px",
+        "gap": "10px"
+      },
+      "XS": {
+        "width": "384px",
+        "height": "105.5px",
+        "paddingTop": "16px",
+        "paddingBottom": "16px",
+        "paddingLeft": "16px",
+        "paddingRight": "16px",
+        "gap": "10px"
+      }
+    }
+  }
+}

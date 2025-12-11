@@ -1,1 +1,4 @@
-Verified the column spacing update on the preview environment. The new XXL semantic spacing (--spacing-gutter-2xl) is successfully applied for LG and larger breakpoints. Compared old vs new layouts, and the updated version displays noticeably increased spacing between columns, resolving the original issue of content appearing too close together. All column layouts render correctly with no visual regressions. Marking as PASS.
+I reviewed the Featured Blog Posts section and validated the fix for the card shadow visibility issue. Previously, the left and right card shadows were being cut off due to container overflow and max-width constraints. After the update, the card shadows now render fully on both sides as expected and match the Figma reference. The component respects max content width, and no visual clipping or layout shifting is observed.
+
+All breakpoints were checked, and the shadows remain visible across responsive sizes.
+Marking this ticket as PASS.

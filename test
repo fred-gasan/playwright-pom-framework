@@ -1,9 +1,1 @@
-I completed testing for the Sanity updates from the 12/4 session. All expected schema and navigation changes behave correctly:
-
-The new Last Modified Date field is now visible on Generic Content Pages and saves as expected.
-
-Lister Pages continue to display the Publication Date as intended.
-
-The folder name update from “Landing Pages” to “Lister Pages” is reflected in the Sanity navigation, and all documents load with no issues.
-
-Everything matches the requirements, and no blocking issues were found.
+Verified the column spacing update on the preview environment. The new XXL semantic spacing (--spacing-gutter-2xl) is successfully applied for LG and larger breakpoints. Compared old vs new layouts, and the updated version displays noticeably increased spacing between columns, resolving the original issue of content appearing too close together. All column layouts render correctly with no visual regressions. Marking as PASS.

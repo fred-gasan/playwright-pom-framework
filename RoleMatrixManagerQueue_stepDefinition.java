@@ -55,6 +55,34 @@ public class RoleMatrixManagerQueue_stepDefinition extends AbstractStepDefinitio
         System.out.println("Clicked " + buttonName + " button");
     }
 
+    @When("we click-custom on Submit button in the modal")
+    public void weClickCustomOnSubmitButtonInTheModal() {
+        // Confirmed from DOM: div#generic_modal_submit_button.ui.compact.blue.right.labeled.icon.button
+        // onclick="ajax_submit_form(this,'retain')" - same submit button is reused by the revoke modal too.
+        WebElement submitButton = state.getDriver().findElement(By.id("generic_modal_submit_button"));
+        HighLightElement(state.getDriver(), submitButton);
+        submitButton.click();
+        System.out.println("Clicked Submit button in modal");
+    }
+
+    @When("we click-custom on Cancel button in the modal")
+    public void weClickCustomOnCancelButtonInTheModal() {
+        // Confirmed from DOM: div.ui.compact.black.deny.icon.labeled.button value="Previous Page"
+        // onclick="$('#retain_modal').modal('hide')"
+        By cancelLocator = By.xpath("//div[contains(@class,'deny') and contains(@class,'button')]");
+        WebElement cancelButton = state.getDriver().findElement(cancelLocator);
+        cancelButton.click();
+        System.out.println("Clicked Cancel button in modal");
+    }
+
+    @Then("we should see the note {string}")
+    public void weShouldSeeTheNote(String expectedNote) {
+        By noteLocator = By.xpath("//*[contains(normalize-space(.), \"" + expectedNote + "\")]");
+        WebElement noteElement = state.getDriver().findElement(noteLocator);
+        Assert.assertTrue(noteElement.isDisplayed(), "Expected note text not visible: " + expectedNote);
+        System.out.println("Verified note text is displayed: " + expectedNote);
+    }
+
     @When("we enter-custom {string} in the Business Justification field for entitlement {string}")
     public void weEnterCustomInBusinessJustificationField(String text, String entitlement) {
         By justificationInput = By.xpath(
@@ -101,11 +129,16 @@ public class RoleMatrixManagerQueue_stepDefinition extends AbstractStepDefinitio
 
     @Then("we should see validation message {string}")
     public void weShouldSeeValidationMessage(String expectedMessage) {
-        By validationLocator = By.xpath("//*[contains(@class,'error') or contains(@class,'validation')]");
+        // The modal renders errors as: <div class="ui ... message">
+        //   <div class="header">There was a problem with this action</div>
+        //   <ul><li>Please enter a business justification to proceed</li></ul>
+        // </div>
+        // Confirm the exact "message" class (e.g. "ui negative message") against the live DOM.
+        By validationLocator = By.xpath(
+                "//div[contains(@class,'message')]//li[contains(normalize-space(.), \"" + expectedMessage + "\")]");
         WebElement validationElement = state.getDriver().findElement(validationLocator);
-        String actualMessage = validationElement.getText().trim();
-        Assert.assertTrue(actualMessage.contains(expectedMessage),
-                "Expected validation message '" + expectedMessage + "' but found: " + actualMessage);
-        System.out.println("Validation message verified: " + actualMessage);
+        Assert.assertTrue(validationElement.isDisplayed(),
+                "Expected validation message not visible: " + expectedMessage);
+        System.out.println("Validation message verified: " + validationElement.getText().trim());
     }
 }

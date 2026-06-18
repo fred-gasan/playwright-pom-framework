@@ -32,7 +32,10 @@ Feature: CostCenter-update
     And we wait
     When we click-custom on "Retain" button for entitlement
     And we wait
-    Then we should see validation message "Business Justification is required"
+    Then we should see the note "A business justification is required to retain the selected record(s)"
+    When we click-custom on Submit button in the modal
+    And we wait
+    Then we should see validation message "Please enter a business justification to proceed"
 
   Scenario: Retain action succeeds when Business Justification is provided
     When we select the checkbox for entitlement "REG-71.ent1"

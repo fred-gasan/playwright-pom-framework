@@ -1,153 +1,178 @@
-Test Case ID
+Test Cases – Out of Scope Tab Update
 
-Test Scenario
+TC01 – Verify Out of Scope tab is accessible
 
-Precondition
+Precondition: User is logged in as a SAT System User and has access to Validation View.
 
-Steps
+Steps:
 
-Test Data
+1. Login to the application.
+2. Navigate to Validation View.
+3. Open the Out of Scope tab (/rolematrix/validation/all/out/).
 
-Expected Result
+Expected Result:
 
-Priority
+* Out of Scope tab opens successfully.
+* Records are displayed without any error.
 
-TC_001
+⸻
 
-Verify Out of Scope tab is accessible from Validation View
+TC02 – Verify default Out of Scope description is updated
 
-User is logged in as SAT System User and has access to Validation View
+Precondition: User is on the Out of Scope tab. A record exists where the upload/OIM reason is blank.
 
-1. Login to the application as SAT System User. 2. Navigate to Validation View. 3. Open the Out of Scope tab using /rolematrix/validation/all/out/.
+Steps:
 
-N/A
+1. Login to the application.
+2. Navigate to Validation View > Out of Scope tab.
+3. Find a record where the upload/OIM reason is blank.
+4. Check the value displayed in the Out of Scope column.
 
-Out of Scope tab opens successfully and records are displayed without errors.
+Expected Result:
 
-High
+* The Out of Scope column displays “No Transfer and Terminations”.
 
-TC_002
+⸻
 
-Verify Out of Scope column default description is updated
+TC03 – Verify OIM Upload reason is displayed in Out of Scope column
 
-User is on the Out of Scope tab
+Precondition: User is on the Out of Scope tab. A record exists where the upload/OIM reason is populated.
 
-1. Login to the application. 2. Navigate to Validation View > Out of Scope tab. 3. Review the Out of Scope column values for records where Upload/OIM reason is blank.
+Steps:
 
-Record with blank Upload/OIM reason
+1. Login to the application.
+2. Navigate to Validation View > Out of Scope tab.
+3. Find a record where the upload/OIM reason has a value.
+4. Check the value displayed in the Out of Scope column.
 
-Out of Scope column displays the default description “No Transfer and Terminations”.
+Expected Result:
 
-High
+* The Out of Scope column displays the exact reason from the OIM Upload field.
 
-TC_003
+⸻
 
-Verify Out of Scope column displays OIM Upload reason when upload column is populated
+TC04 – Verify default Out of Scope description is shown when upload column is blank
 
-Record exists where Upload/OIM reason is not blank
+Precondition: User is on the Out of Scope tab. A record exists where the upload/OIM reason is blank.
 
-1. Login to the application. 2. Navigate to Validation View > Out of Scope tab. 3. Locate a record where the Upload/OIM reason field has a value. 4. Check the value shown in the Out of Scope column.
+Steps:
 
-Record with populated OIM Upload reason
+1. Login to the application.
+2. Navigate to Validation View > Out of Scope tab.
+3. Locate a record with blank upload/OIM reason.
+4. Verify the Out of Scope column value.
 
-Out of Scope column displays the exact reason coming from the OIM Upload field instead of the default text.
+Expected Result:
 
-High
+* The Out of Scope column shows “No Transfer and Terminations”.
 
-TC_004
+⸻
 
-Verify default Out of Scope description is shown when upload column is blank
+TC05 – Verify Starting Appropriateness column is hidden
 
-Record exists where Upload/OIM reason is blank
+Precondition: User is on the Out of Scope tab.
 
-1. Login to the application. 2. Navigate to Validation View > Out of Scope tab. 3. Locate a record where the Upload/OIM reason field is blank. 4. Check the value in the Out of Scope column.
+Steps:
 
-Record with blank OIM Upload reason
+1. Login to the application.
+2. Navigate to Validation View > Out of Scope tab.
+3. Review the list of visible table columns.
 
-Out of Scope column displays “No Transfer and Terminations” when no upload reason exists.
+Expected Result:
 
-High
+* Starting Appropriateness column is not displayed on the Out of Scope tab.
 
-TC_005
+⸻
 
-Verify Starting Appropriateness column is hidden on Out of Scope tab
+TC06 – Verify Current Appropriateness column is hidden
 
-User is on the Out of Scope tab
+Precondition: User is on the Out of Scope tab.
 
-1. Login to the application. 2. Navigate to Validation View > Out of Scope tab. 3. Review all visible columns in the table.
+Steps:
 
-N/A
+1. Login to the application.
+2. Navigate to Validation View > Out of Scope tab.
+3. Review the list of visible table columns.
 
-Starting Appropriateness column is not displayed in the Out of Scope tab table.
+Expected Result:
 
-High
+* Current Appropriateness column is not displayed on the Out of Scope tab.
 
-TC_006
+⸻
 
-Verify Current Appropriateness column is hidden on Out of Scope tab
+TC07 – Verify hidden columns remain hidden after page refresh
 
-User is on the Out of Scope tab
+Precondition: User is on the Out of Scope tab.
 
-1. Login to the application. 2. Navigate to Validation View > Out of Scope tab. 3. Review all visible columns in the table.
+Steps:
 
-N/A
+1. Login to the application.
+2. Navigate to Validation View > Out of Scope tab.
+3. Verify Starting Appropriateness and Current Appropriateness columns are hidden.
+4. Refresh the page.
+5. Recheck the table columns.
 
-Current Appropriateness column is not displayed in the Out of Scope tab table.
+Expected Result:
 
-High
+* After refresh, Starting Appropriateness and Current Appropriateness columns remain hidden.
 
-TC_007
+⸻
 
-Verify both hidden columns are not displayed together after page refresh
+TC08 – Verify Out of Scope values for records with and without upload reasons
 
-User is on the Out of Scope tab
+Precondition: Test environment contains:
 
-1. Login to the application. 2. Navigate to Validation View > Out of Scope tab. 3. Verify Starting Appropriateness and Current Appropriateness columns are hidden. 4. Refresh the page. 5. Re-check the table columns.
+* at least one record with populated OIM Upload reason
+* at least one record with blank OIM Upload reason
 
-N/A
+Steps:
 
-After refresh, Starting Appropriateness and Current Appropriateness columns remain hidden.
+1. Login to the application.
+2. Navigate to Validation View > Out of Scope tab.
+3. Review a record with populated upload reason.
+4. Review a record with blank upload reason.
+5. Compare the Out of Scope column values.
 
-Medium
+Expected Result:
 
-TC_008
+* For records with upload reason populated, the Out of Scope column shows the OIM Upload reason.
+* For records with upload reason blank, the Out of Scope column shows “No Transfer and Terminations”.
 
-Verify Out of Scope values are shown correctly for multiple record types
+⸻
 
-Test environment contains records with and without OIM Upload reasons
+TC09 – Verify table layout is not broken after hiding columns
 
-1. Login to the application. 2. Navigate to Validation View > Out of Scope tab. 3. Review multiple records. 4. Compare records with populated upload reason vs blank upload reason.
+Precondition: User is on the Out of Scope tab.
 
-Mixed records: some with OIM Upload reason, some blank
+Steps:
 
-Records with upload reason show the OIM reason; records without upload reason show “No Transfer and Terminations”.
+1. Login to the application.
+2. Navigate to Validation View > Out of Scope tab.
+3. Review the table header alignment.
+4. Review row data alignment.
 
-High
+Expected Result:
 
-TC_009
+* Table layout remains correct.
+* No broken UI, misalignment, or missing values caused by hiding the Appropriateness columns.
 
-Verify table layout is not broken after hiding Appropriateness columns
+⸻
 
-User is on the Out of Scope tab
+TC10 – Verify overall Out of Scope tab functionality after update
 
-1. Login to the application. 2. Navigate to Validation View > Out of Scope tab. 3. Review the table header and row alignment.
+Precondition: User is on the Out of Scope tab.
 
-N/A
+Steps:
 
-Table layout remains aligned correctly; no broken UI or shifted columns after hiding the two Appropriateness columns.
+1. Login to the application.
+2. Navigate to Validation View > Out of Scope tab.
+3. Review records and visible columns.
+4. Verify the Out of Scope values for different records.
+5. Scroll through the table and ensure the page behaves normally.
 
-Medium
+Expected Result:
 
-TC_010
-
-Verify updated Out of Scope tab behavior does not impact page usability
-
-User is on the Out of Scope tab
-
-1. Login to the application. 2. Navigate to Validation View > Out of Scope tab. 3. Scroll through records. 4. Validate columns and values are readable and usable.
-
-N/A
-
-Page remains usable, records are displayed correctly, and updated Out of Scope logic works without UI or functional issues.
-
-Medium
+* Out of Scope tab works correctly.
+* Updated column behavior is applied properly.
+* Hidden columns stay hidden.
+* Records and values display correctly without UI or functional issues.

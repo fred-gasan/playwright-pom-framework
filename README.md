@@ -1,66 +1,11 @@
-Manual Test Cases — SAT_20260630 | Datatable Config (Current Appropriateness Column)
-URL: /rolematrix/mnepreviewqueue/
-
-Prereq: Logged in as fg-manager1
-
-TC-01 | Search field exists on Current Appropriateness column
-
-Steps: Navigate to mnepreviewqueue → Scroll to tfoot → Locate Current Appropriateness column
-Expected: Search input field is visible and enabled under Current Appropriateness column in tfoot
-
-
-TC-02 | Search returns matching rows
-
-Steps: Type "Inappropriate" in Current Appropriateness search field → Wait for table to filter
-Expected: Only rows containing "Inappropriate" in Current Appropriateness column are displayed
-
-
-TC-03 | Search is case-insensitive
-
-Steps: Type "inappropriate" (all lowercase) in search field
-Expected: Same rows returned as "Inappropriate" — filter is not case-sensitive
-
-
-TC-04 | Search with no match shows empty table
-
-Steps: Type "xyz123" in Current Appropriateness search field
-Expected: Table shows "No matching records found" / 0 entries; no data rows visible
-
-
-TC-05 | Clearing search restores all rows
-
-Steps: Type "Inappropriate" → confirm filter → Clear the search field
-Expected: All original rows return; table resets to full unfiltered state
-
-
-TC-06 | Sorting is disabled on Current Appropriateness column
-
-Steps: Click the Current Appropriateness column header once
-Expected: Table does NOT sort; no sort arrow (▲▼) appears on header; row order unchanged
-
-
-TC-07 | Sorting stays disabled on repeated clicks
-
-Steps: Click Current Appropriateness column header 2–3 times
-Expected: Still no sort applied on any click; header class remains sorting_disabled
-
-
-TC-08 | Sorting still works on other columns
-
-Steps: Click Mnemonic column header → then click again
-Expected: First click sorts ascending (▲), second click sorts descending (▼); confirms only Current Appropriateness is restricted
-
-
-TC-09 | Search does not cause timeout
-
-Steps: Type "Inappropriate" in search field → observe page behavior for 5 seconds
-Expected: Table filters and responds within 5 seconds; no spinner stuck; no timeout error on page
-
-
-TC-10 | Search + sort interaction on other columns
-
-Steps: Type "Inappropriate" in Current Appropriateness search → then click Mnemonic column to sort
-Expected: Filtered rows remain (only "Inappropriate") AND sort by Mnemonic applies correctly on top of filter
-
-
-TCPriorityTypeTC-01HighFunctionalTC-02HighFunctionalTC-03MediumFunctionalTC-04MediumNegativeTC-05MediumFunctionalTC-06HighFunctionalTC-07LowBoundaryTC-08HighFunctionalTC-09HighPerformanceTC-10MediumIntegration
+Test Case ID	Test Scenario	Test Steps	Test Data	Expected Result	Priority
+TC_01	Verify column heading update on Manager Approval screen	1. Navigate to /sat/managerapproval/ screen 2. Observe the column headings	N/A	Column previously labeled "Items Decisioned" now displays "Items to Signoff"; column previously labeled "Items to Signoff" now displays "Items Completed"	High
+TC_02	Verify column heading update on App Owner Approval screen	1. Navigate to /sat/appownerapproval/ screen 2. Observe the column headings	N/A	Column previously labeled "Items Decisioned" now displays "Items to Signoff"; column previously labeled "Items to Signoff" now displays "Items Completed"	High
+TC_03	Verify "Items to Signoff" column shows correct count (remaining items)	1. Go to /sat/managerapproval/ 2. Identify a certification with a known number of pending items 3. Check value under "Items to Signoff" column	Certification record with X items not yet decisioned	Value displayed equals the number of items still remaining to be decisioned (X)	High
+TC_04	Verify "Items Completed" column shows correct count (already decisioned items)	1. Go to /sat/managerapproval/ 2. Identify a certification with a known number of completed items 3. Check value under "Items Completed" column	Certification record with Y items already decisioned	Value displayed equals the number of items already decisioned (Y)	High
+TC_05	Verify data accuracy consistency between old and new column labels	1. Note counts under old labels before deployment 2. Compare same record's counts after label change	Same certification record pre/post change	Underlying data/count values remain unchanged; only column headers/labels are updated	Medium
+TC_06	Verify no other columns/headings are affected	1. Navigate to both /sat/managerapproval/ and /sat/appownerapproval/ 2. Review all other column headers	N/A	All other column headings remain unchanged; only the two specified columns are relabeled	Medium
+TC_07	Verify column update reflects on both screens consistently	1. Open /sat/managerapproval/ 2. Open /sat/appownerapproval/ 3. Compare column headers on both screens	N/A	Both screens show identical updated headings ("Items to Signoff" and "Items Completed")	Medium
+TC_08	Verify heading update does not break sorting/filtering functionality	1. Go to /sat/managerapproval/ 2. Click on "Items to Signoff" header to sort 3. Click on "Items Completed" header to sort	Multiple certification records with varying counts	Sorting/filtering functions correctly under new headers, same as before rename	Low
+TC_09	Verify heading text casing/formatting matches acceptance criteria exactly	1. Zoom into column headers on both screens 2. Compare text to acceptance criteria	N/A	Headers read exactly "Items to Signoff" and "Items Completed" (correct spelling, casing, spacing)	Medium
+TC_10	Regression check on downstream reports/exports (if applicable)	1. Export or generate any report referencing these columns 2. Check exported column headers	Export/report feature, if available	Exported reports reflect updated column names, or old export logic still functions without error	Low

@@ -1,13 +1,19 @@
-Test Case ID	Test Scenario	Test Steps	Test Data	Expected Result	Priority
-TC_01	Verify Active/Inactive tabs display on Manage Third Party view	1. Navigate to /rolematrix/managethirdparty/ 2. Observe the view	N/A	Two tabs are visible: "Active" and "Inactive"	High
-TC_02	Verify Active/Inactive tabs display on Manage Non-Human view	1. Navigate to /rolematrix/managenonhuman/ 2. Observe the view	N/A	Two tabs are visible: "Active" and "Inactive"	High
-TC_03	Verify Active tab shows records with no End Date	1. Go to Active tab on Manage Third Party view 2. Check listed records	Record with End Date field left blank	Record appears under the Active tab	High
-TC_04	Verify Active tab shows records with End Date in the future	1. Go to Active tab 2. Check listed records	Record with End Date set to a date after today (e.g., today +30 days)	Record appears under the Active tab	High
-TC_05	Verify Inactive tab shows records with End Date in the past	1. Go to Inactive tab 2. Check listed records	Record with End Date set to a date before today (e.g., today -1 day)	Record appears under the Inactive tab	High
-TC_06	Verify boundary condition: End Date = today	1. Set a record's End Date to today's date 2. Check both Active and Inactive tabs	Record with End Date = today	Confirm with business/BA which tab this should appear in (edge case); verify actual behavior matches expected rule	High
-TC_07	Verify record moves from Active to Inactive once End Date passes	1. Identify a record with End Date = tomorrow 2. Wait until date passes (or adjust system/test date) 3. Refresh view	Record with End Date = tomorrow, then advanced to today/past	Record moves from Active tab to Inactive tab once its End Date is in the past	Medium
-TC_08	Verify no overlap of records between tabs	1. Go to Active tab, note all record IDs 2. Go to Inactive tab, note all record IDs	Full dataset with mixed End Dates	No record ID appears in both tabs simultaneously	Medium
-TC_09	Verify all records are accounted for across both tabs	1. Count total records in Active tab 2. Count total records in Inactive tab 3. Compare sum to total records in system	Full dataset	Sum of Active + Inactive record counts equals total number of records	Medium
-TC_10	Verify tab behavior consistency across both views	1. Repeat TC_03-TC_05 on /rolematrix/managenonhuman/	Same test data structure as Third Party view	Manage Non-Human view behaves identically to Manage Third Party view for Active/Inactive logic	Medium
-TC_11	Verify default landing tab	1. Navigate to either view fresh (no tab pre-selected)	N/A	Confirm which tab (Active or Inactive) loads by default - verify against expected/intended behavior	Low
-TC_12	Verify sorting/filtering still works within each tab	1. Go to Active tab 2. Sort/filter by any column 3. Repeat on Inactive tab	Multiple records with varying attributes	Sorting/filtering functions correctly within each tab independently	Low
+Test Case ID	Test Case Title	Preconditions	Test Steps	Expected Result	Priority	Status
+TC-01	Verify updated header order displays correctly	User has access to /rolematrix/managenonhuman/	"1. Navigate to /rolematrix/managenonhuman/
+2. Locate the upload instructions section"	Headers appear in exact order: Profile ID, Type of ID, Owner ID, Owner Back-Up ID, Entitlement, Mnemonic, High Risk Entitlement, SOD Concerns, Additional Controls/Reports, Purpose, Active Date, Inactive Date	High	Not Run
+TC-02	Verify header names are unchanged	Story SAT_20260825 has been deployed	"1. Open upload instructions
+2. Compare each header label against the original set"	No header text was renamed, added, or removed — only the order changed	Medium	Not Run
+TC-03	Verify count of headers matches original	Upload instructions are visible	"1. Open upload instructions
+2. Count total number of headers listed"	12 headers total, matching the pre-existing set	Low	Not Run
+TC-04	Verify uploaded file template/sample matches new order	A downloadable template/sample file exists on the page	"1. Download the template/sample file from the page
+2. Open the file and review column order"	Column order in template matches the new instruction order exactly	Medium	Not Run
+TC-05	Verify successful upload using correctly-ordered file	Test file prepared with columns in the new order	"1. Prepare a test file with columns in the new order
+2. Upload the file via /rolematrix/managenonhuman/"	Upload succeeds without column-mapping errors	High	Not Run
+TC-06	Verify upload behavior with old (pre-fix) column order	Test file prepared using the previous incorrect column order	"1. Prepare a test file using the previous (old) column order
+2. Upload the file"	Confirm expected behavior — file is either rejected with a clear error, or correctly mapped (clarify intended behavior with team)	Medium	Not Run
+TC-07	Regression - no impact to other pages/instructions	Identify any other pages that reference the same shared instruction component	"1. Navigate to other pages referencing the same instruction set (if applicable)
+2. Review header order on those pages"	No unintended header order changes on other pages	Low	Not Run
+TC-08	Visual/UI formatting check	Upload instructions are visible	1. Review formatting (spacing, punctuation, line breaks) of the instructions section	No visual defects introduced by the reordering; text is clean and readable	Low	Not Run
+TC-09	Cross-browser/device check	Access to at least 2 supported browsers (e.g., Chrome, Edge)	"1. View upload instructions in Chrome
+2. View upload instructions in Edge
+3. Compare rendering"	Header order and formatting render consistently across browsers	Low	Not Run![Uploading image.png…]()

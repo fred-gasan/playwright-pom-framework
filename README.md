@@ -1,19 +1,12 @@
-Test Case ID	Test Case Title	Preconditions	Test Steps	Expected Result	Priority	Status
-TC-01	Verify updated header order displays correctly	User has access to /rolematrix/managenonhuman/	"1. Navigate to /rolematrix/managenonhuman/
-2. Locate the upload instructions section"	Headers appear in exact order: Profile ID, Type of ID, Owner ID, Owner Back-Up ID, Entitlement, Mnemonic, High Risk Entitlement, SOD Concerns, Additional Controls/Reports, Purpose, Active Date, Inactive Date	High	Not Run
-TC-02	Verify header names are unchanged	Story SAT_20260825 has been deployed	"1. Open upload instructions
-2. Compare each header label against the original set"	No header text was renamed, added, or removed — only the order changed	Medium	Not Run
-TC-03	Verify count of headers matches original	Upload instructions are visible	"1. Open upload instructions
-2. Count total number of headers listed"	12 headers total, matching the pre-existing set	Low	Not Run
-TC-04	Verify uploaded file template/sample matches new order	A downloadable template/sample file exists on the page	"1. Download the template/sample file from the page
-2. Open the file and review column order"	Column order in template matches the new instruction order exactly	Medium	Not Run
-TC-05	Verify successful upload using correctly-ordered file	Test file prepared with columns in the new order	"1. Prepare a test file with columns in the new order
-2. Upload the file via /rolematrix/managenonhuman/"	Upload succeeds without column-mapping errors	High	Not Run
-TC-06	Verify upload behavior with old (pre-fix) column order	Test file prepared using the previous incorrect column order	"1. Prepare a test file using the previous (old) column order
-2. Upload the file"	Confirm expected behavior — file is either rejected with a clear error, or correctly mapped (clarify intended behavior with team)	Medium	Not Run
-TC-07	Regression - no impact to other pages/instructions	Identify any other pages that reference the same shared instruction component	"1. Navigate to other pages referencing the same instruction set (if applicable)
-2. Review header order on those pages"	No unintended header order changes on other pages	Low	Not Run
-TC-08	Visual/UI formatting check	Upload instructions are visible	1. Review formatting (spacing, punctuation, line breaks) of the instructions section	No visual defects introduced by the reordering; text is clean and readable	Low	Not Run
-TC-09	Cross-browser/device check	Access to at least 2 supported browsers (e.g., Chrome, Edge)	"1. View upload instructions in Chrome
-2. View upload instructions in Edge
-3. Compare rendering"	Header order and formatting render consistently across browsers	Low	Not Run![Uploading image.png…]()
+Test Cases — Validation Start Date Blocking
+ID	Title	Preconditions	Steps	Expected Result	Priority
+TC01	Validation Start Date after Manager Start Date (happy path)	Calendar exists with a Manager Start Date set	1. Open calendar 2. Enter Validation Start Date later than Manager Start Date 3. Save	Save succeeds, no error shown	High
+TC02	Validation Start Date before Manager Start Date (blocked)	Same as above	1. Enter Validation Start Date earlier than Manager Start Date 2. Save	Save is blocked; clear error message shown; Manager Start Date and Validation Start Date rule is enforced	High
+TC03	Validation Start Date equal to Manager Start Date (boundary)	Same as above	1. Enter Validation Start Date = Manager Start Date exactly 2. Save	Confirm with PO whether equal dates are allowed or blocked; verify system matches that rule	High
+TC04	Error message clarity	Same as above	1. Trigger TC02 scenario	Error message clearly states the reason (Validation Start Date must be after Manager Start Date) and identifies which field is invalid	Medium
+TC05	Editing Manager Start Date after Validation Start Date already set	Existing calendar with valid dates saved	1. Edit Manager Start Date to a date after the existing Validation Start Date 2. Save	System should re-validate and block save (or flag conflict), since the existing Validation Start Date would now precede it	High
+TC06	New calendar creation with no Manager Start Date yet	New calendar, Manager Start Date blank	1. Attempt to enter Validation Start Date	Confirm expected behavior — should system require Manager Start Date first, or allow any Validation Start Date until Manager Start Date exists?	Medium
+TC07	Validation End Date interaction (if applicable)	Calendar with Validation Start/End Date fields	1. Set Validation Start Date valid, then set Validation End Date earlier than Validation Start Date	Confirm whether this is in scope; if so, should also be blocked	Low
+TC08	Bulk/import path (e.g., "Download Select Models")	Existing calendars	1. Attempt to import/upload a calendar record with invalid Validation Start Date via bulk load	Same validation rule should apply on import, not just UI entry	Medium
+TC09	Regression — unrelated fields unaffected	Calendar with multiple fields	1. Trigger validation error 2. Verify other fields (Release ID, Story Points, etc.) retain entered values	No data loss on other fields when error is thrown	Low
+TC10	No Tests currently exist (per ticket's Test Coverage section)	N/A	Confirm these new cases get linked/added to the ticket's Test Coverage section once executed	Ticket shows test coverage after execution	Low

@@ -1,12 +1,31 @@
-Test Cases — Validation Start Date Blocking
-ID	Title	Preconditions	Steps	Expected Result	Priority
-TC01	Validation Start Date after Manager Start Date (happy path)	Calendar exists with a Manager Start Date set	1. Open calendar 2. Enter Validation Start Date later than Manager Start Date 3. Save	Save succeeds, no error shown	High
-TC02	Validation Start Date before Manager Start Date (blocked)	Same as above	1. Enter Validation Start Date earlier than Manager Start Date 2. Save	Save is blocked; clear error message shown; Manager Start Date and Validation Start Date rule is enforced	High
-TC03	Validation Start Date equal to Manager Start Date (boundary)	Same as above	1. Enter Validation Start Date = Manager Start Date exactly 2. Save	Confirm with PO whether equal dates are allowed or blocked; verify system matches that rule	High
-TC04	Error message clarity	Same as above	1. Trigger TC02 scenario	Error message clearly states the reason (Validation Start Date must be after Manager Start Date) and identifies which field is invalid	Medium
-TC05	Editing Manager Start Date after Validation Start Date already set	Existing calendar with valid dates saved	1. Edit Manager Start Date to a date after the existing Validation Start Date 2. Save	System should re-validate and block save (or flag conflict), since the existing Validation Start Date would now precede it	High
-TC06	New calendar creation with no Manager Start Date yet	New calendar, Manager Start Date blank	1. Attempt to enter Validation Start Date	Confirm expected behavior — should system require Manager Start Date first, or allow any Validation Start Date until Manager Start Date exists?	Medium
-TC07	Validation End Date interaction (if applicable)	Calendar with Validation Start/End Date fields	1. Set Validation Start Date valid, then set Validation End Date earlier than Validation Start Date	Confirm whether this is in scope; if so, should also be blocked	Low
-TC08	Bulk/import path (e.g., "Download Select Models")	Existing calendars	1. Attempt to import/upload a calendar record with invalid Validation Start Date via bulk load	Same validation rule should apply on import, not just UI entry	Medium
-TC09	Regression — unrelated fields unaffected	Calendar with multiple fields	1. Trigger validation error 2. Verify other fields (Release ID, Story Points, etc.) retain entered values	No data loss on other fields when error is thrown	Low
-TC10	No Tests currently exist (per ticket's Test Coverage section)	N/A	Confirm these new cases get linked/added to the ticket's Test Coverage section once executed	Ticket shows test coverage after execution	Low
+Test Case ID	Test Case Title	Preconditions	Test Steps	Expected Result	Priority	Status
+TC-01	Verify filters retained on Manager Certifications page after submit	User is logged in as a Manager with access to /sat/managerapproval/; work queue has multiple items	"1. Navigate to /sat/managerapproval/
+2. Apply a filter on one or more columns
+3. Decision (approve/reject) some items in the queue
+4. Click Submit"	After submission, the previously applied column filters remain in place; filtered view is unchanged	High	Not Run
+TC-02	Verify filters retained on App Owner Certifications page after submit	User is logged in as an App Owner with access to /sat/appownerapproval/; work queue has multiple items	"1. Navigate to /sat/appownerapproval/
+2. Apply a filter on one or more columns
+3. Decision some items in the queue
+4. Click Submit"	After submission, the previously applied column filters remain in place; filtered view is unchanged	High	Not Run
+TC-03	Verify multiple simultaneous column filters are retained	User is on Manager or App Owner Certifications page with a queue containing varied data	"1. Apply filters to two or more columns at once
+2. Decision some filtered items
+3. Click Submit"	All applied filters across multiple columns remain in place after submit, not just the last one applied	High	Not Run
+TC-04	Verify filtered-out items remain hidden after submit	User is on Manager or App Owner Certifications page; filter applied that excludes some items	"1. Apply a filter that excludes certain rows
+2. Decision the visible (filtered-in) items
+3. Click Submit"	Filtered-out items remain hidden after submit; only the filtered-in item set is displayed	Medium	Not Run
+TC-05	Verify filters retained when only some items in queue are decisioned	User is on Manager or App Owner Certifications page with a queue of 5+ items and a filter applied	"1. Apply a filter
+2. Decision only a subset of the visible items
+3. Click Submit"	Filters remain applied; remaining undecisioned items are still shown per the active filter	Medium	Not Run
+TC-06	Verify filters are cleared/reset appropriately on manual clear	User is on Manager or App Owner Certifications page with a filter applied	"1. Apply a filter
+2. Manually clear or remove the filter
+3. Click Submit after deciding some items"	Filter remains cleared after submit (i.e., the fix does not force filters to persist when user explicitly removed them)	Low	Not Run
+TC-07	Verify behavior on page refresh/navigation away and back	User is on Manager or App Owner Certifications page with a filter applied and items decisioned	"1. Apply a filter, decision some items, and submit
+2. Navigate away from the page
+3. Return to the same page"	Confirm expected behavior — clarify with team whether filters should persist across navigation or only across submit within the same session	Low	Not Run
+TC-08	Regression - decisioning still functions correctly with filters retained	User is on Manager or App Owner Certifications page with a filter applied	"1. Apply a filter
+2. Approve/reject items
+3. Click Submit
+4. Verify decisioned items are correctly processed (status updates, removed from queue, etc.)"	Decisions are processed correctly and reflected accurately; filter retention does not interfere with decision logic	High	Not Run
+TC-09	Cross-browser/device check	Access to at least 2 supported browsers (e.g., Chrome, Edge)	"1. Repeat TC-01 or TC-02 in Chrome
+2. Repeat in Edge
+3. Compare filter retention behavior"	Filter retention behaves consistently across browsers	Low	Not Run<img width="1225" height="561" alt="image" src="https://github.com/user-attachments/assets/04f42828-429c-44e4-9416-98a076888563" />

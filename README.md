@@ -1,30 +1,76 @@
-Test Case ID	Test Case Title	Preconditions	Test Steps	Expected Result	Priority	Status
-TC-01	Verify task log is created on successful upload to Non-Human table	User has access to /rolematrix/managenonhuman/; a valid upload file is prepared	"1. Navigate to /rolematrix/managenonhuman/
-2. Upload a valid file with all records correctly formatted
-3. Wait for processing to complete
-4. Open the resulting task log"	Task log is created/updated for the upload and reflects that processing has completed	High	Not Run
-TC-02	Verify task log shows status of processing completion	A file has been uploaded to the Non-Human table and processing has finished	"1. Upload a file
-2. Wait for processing to complete
-3. Review task log status field"	Task log clearly displays a status indicating the processing has completed	High	Not Run
-TC-03	Verify task log records number of records added	A file with a known number of valid records is prepared	"1. Upload a file containing a known number of valid records (e.g., 10)
-2. Wait for processing to complete
-3. Review task log"	Task log records the correct count of records successfully added, matching the known input count	High	Not Run
-TC-04	Verify task log records number of records failed	A file containing a mix of valid and invalid records is prepared	"1. Upload a file with a known number of invalid/failing records (e.g., 3 invalid, 7 valid)
-2. Wait for processing to complete
-3. Review task log"	Task log records the correct count of failed records, matching the known number of invalid records	High	Not Run
-TC-05	Verify task log with all records failing	A file containing only invalid records is prepared	"1. Upload a file where all records are invalid
-2. Wait for processing to complete
-3. Review task log"	Task log shows 0 records added and the correct count of failed records; status reflects completion (with failures)	Medium	Not Run
-TC-06	Verify task log with all records succeeding	A file containing only valid records is prepared	"1. Upload a file where all records are valid
-2. Wait for processing to complete
-3. Review task log"	Task log shows the correct count of records added and 0 failed records	Medium	Not Run
-TC-07	Verify task log format is consistent with existing example (Prod task #11886)	Reference example task log (Prod task #11886) is available for comparison	"1. Upload a file and let it process
-2. Compare new task log's structure/fields to the referenced example task log #11886"	New task log follows the same structure/format as the reference example, with added status and record count fields	Medium	Not Run
-TC-08	Verify task log updates in real time / upon completion (not before)	A large file is prepared to allow observation of in-progress state	"1. Upload a large file
-2. Check task log while processing is still in progress
-3. Check task log again after processing completes"	Task log does not falsely show 'completed' status while processing is still running; updates correctly once finished	Medium	Not Run
-TC-09	Regression - existing task log functionality still works	User has access to /rolematrix/managenonhuman/	"1. Perform a standard upload
-2. Verify all previously existing task log fields/behavior (unrelated to this change) still function as expected"	No regression in existing task log fields or behavior; only new fields/status are added	Low	Not Run
-TC-10	Cross-browser/device check	Access to at least 2 supported browsers (e.g., Chrome, Edge)	"1. Repeat TC-01 in Chrome
+Test Case ID
+Test Case Title	Preconditions	Test Steps	Expected Result	Priority	Status
+TC-01	
+Verify error is shown when Validation Start Date is before Manager Start Date (new calendar)
+User has access to calendar creation screen; a calendar with a defined Manager Start Date is being created
+1. Begin creating a new calendar
+2. Enter a Manager Start Date
+3. Enter a Validation Start Date that is prior to the Manager Start Date
+4. Attempt to save/submit
+System blocks the save and displays an error indicating the Validation Start Date must be after the Manager Start Date
+High	Not Run
+TC-02	
+Verify Validation Start Date equal to Manager Start Date is handled correctly
+A calendar with a defined Manager Start Date is being created
+1. Enter a Manager Start Date
+2. Enter a Validation Start Date equal to the Manager Start Date
+3. Attempt to save/submit
+Confirm expected behavior with team — either accepted (if 'after' is inclusive) or blocked with error (if strictly after is required)
+Medium	Not Run
+TC-03	
+Verify Validation Start Date after Manager Start Date is accepted
+A calendar with a defined Manager Start Date is being created
+1. Enter a Manager Start Date
+2. Enter a Validation Start Date after the Manager Start Date
+3. Save/submit
+Calendar saves successfully with no error	High	Not Run
+TC-04	
+Verify editing existing calendar enforces the same validation
+An existing calendar is available to edit
+1. Open an existing calendar for editing
+2. Change the Validation Start Date to a date prior to the Manager Start Date
+3. Attempt to save
+System blocks the save and displays an error indicating the Validation Start Date must be after the Manager Start Date
+High	Not Run
+TC-05	
+Verify changing Manager Start Date triggers re-validation of existing Validation Start Date
+An existing calendar has both a Manager Start Date and Validation Start Date set
+1. Open an existing calendar for editing
+2. Change the Manager Start Date to a date after the current Validation Start Date
+3. Attempt to save
+System blocks the save and displays an error, since the Validation Start Date is now prior to the updated Manager Start Date
+Medium	Not Run
+TC-06	Verify error message is clear and specific	
+A calendar is being created/edited with an invalid Validation Start Date
+1. Trigger the validation error per TC-01
+2. Review the error message text
+Error message clearly states the issue (Validation Start Date must be after Manager Start Date) and is not a generic/unclear error
+Medium	Not Run
+TC-07	
+Verify validation applies per calendar (not cross-calendar)
+Two or more calendars exist with different Manager Start Dates
+1. Create/edit Calendar A with a Validation Start Date valid for Calendar A but invalid relative to Calendar B's Manager Start Date
+2. Save Calendar A
+Calendar A saves successfully; validation is scoped only to its own associated Manager Start Date, not other calendars
+Low	Not Run
+TC-08	
+Regression - calendar save/edit still functions for valid data
+A calendar with valid Manager Start Date and Validation Start Date values
+1. Create or edit a calendar with all valid, correctly ordered dates
+2. Save
+Calendar saves successfully with no unexpected errors; no regression introduced by the new validation
+High	Not Run
+TC-09	
+Verify blank/missing Manager Start Date does not break validation
+A new calendar is being created without a Manager Start Date entered yet
+1. Leave Manager Start Date blank
+2. Enter a Validation Start Date
+3. Attempt to save
+System handles gracefully — either prompts for required Manager Start Date first or applies appropriate validation without erroring unexpectedly
+Low	Not Run
+TC-10	Cross-browser/device check	
+Access to at least 2 supported browsers (e.g., Chrome, Edge)
+1. Repeat TC-01 in Chrome
 2. Repeat in Edge
-3. Compare task log display"	Task log displays consistently across browsers	Low	Not Run<img width="1225" height="621" alt="image" src="https://github.com/user-attachments/assets/6c44d5f9-b84f-4f60-9342-f838770db02d" />
+3. Compare error handling behavior
+Validation and error message behave consistently across browsers	Low	Not Run

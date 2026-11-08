@@ -1,87 +1,298 @@
-Test Case ID	Scenario Branch	Test Case Title	Preconditions / Test Data	Test Steps	Expected Result	Priority	Status
-TC-01	OUT_OF_SCOPE Not Blank	Verify record with OUT_OF_SCOPE not blank is treated as Out of Scope (Certification calendar)	OIM upload file: OUT_OF_SCOPE = populated; CERT_ACTION = any value; Certification calendar	"1. Prepare upload file with OUT_OF_SCOPE populated
-2. Upload via OIM process
-3. Check the record's Decision and placement"	Record is treated as Out of Scope; Decision shown as whatever is in CERT_ACTION field; other fields (CERTIFIER_ID, Remediated #/Comments) are ignored	High	Not Run
-TC-02	OUT_OF_SCOPE Not Blank	Verify record with OUT_OF_SCOPE not blank shows as 'Not Required' on Off-Cycle calendar	OIM upload file: OUT_OF_SCOPE = populated; Off-Cycle calendar	"1. Prepare upload file with OUT_OF_SCOPE populated
-2. Upload against an Off-Cycle calendar
-3. Check the Decision value"	Decision is shown as 'Not Required' regardless of CERT_ACTION value	High	Not Run
-TC-03	OUT_OF_SCOPE Not Blank	Verify out-of-scope record appears on Out of Scope tab during Validation	OIM upload with OUT_OF_SCOPE populated; Validation period is active	"1. Upload record with OUT_OF_SCOPE populated
-2. Navigate to Validation view
-3. Check which tab the record appears on"	Record is shown on the Out of Scope tab during Validation	High	Not Run
-TC-04	OUT_OF_SCOPE Not Blank	Verify out-of-scope record appears on validation output document	OIM upload with OUT_OF_SCOPE populated; validation output document generated	"1. Upload record with OUT_OF_SCOPE populated
-2. Generate/review the validation output document"	Record appears on the Out of Scope section of the validation output document	Medium	Not Run
-TC-05	Remediated Not Blank – Certified	Verify Certified + Remediated: record added to Revoke Complete tab using CERTIFIER_ID	OIM upload: OUT_OF_SCOPE = blank; Remediated #/Comments = populated; CERT_ACTION = Certified; CERTIFIER_ID = valid UserID	"1. Prepare upload file with above values
-2. Upload via OIM process
-3. Check Revoke Complete tab"	Record appears on Revoke Complete tab with CERTIFIER_ID UserID as request info details	High	Not Run
-TC-06	Remediated Not Blank – Certified	Verify Certified + Remediated: CERTIFIER_ID blank causes upload rejection	OIM upload: Remediated #/Comments = populated; CERT_ACTION = Certified; CERTIFIER_ID = blank	"1. Prepare upload file with CERTIFIER_ID blank
-2. Upload
-3. Check upload result/task log"	Record is rejected during upload due to blank CERTIFIER_ID; error shown	High	Not Run
-TC-07	Remediated Not Blank – Certified	Verify Certified + Remediated: Manager Decision = Certified	OIM upload: Remediated = populated; CERT_ACTION = Certified; CERTIFIER_ID = valid	"1. Upload record
-2. Review Manager Decision field for the record"	Manager Decision displays 'Certified'	High	Not Run
-TC-08	Remediated Not Blank – Certified	Verify Certified + Remediated: AO Decision = Revoke	OIM upload: Remediated = populated; CERT_ACTION = Certified; CERTIFIER_ID = valid	"1. Upload record
-2. Review AO Decision field"	AO Decision displays 'Revoke'	High	Not Run
-TC-09	Remediated Not Blank – Certified	Verify Certified + Remediated: Current Appropriateness = Revoked	OIM upload: Remediated = populated; CERT_ACTION = Certified; CERTIFIER_ID = valid	"1. Upload record
-2. Review Current Appropriateness field"	Current Appropriateness displays 'Revoked'	High	Not Run
-TC-10	Remediated Not Blank – Certified	Verify Certified + Remediated: record on Remediated tab of validation output doc	OIM upload: Remediated = populated; CERT_ACTION = Certified; CERTIFIER_ID = valid	"1. Upload record
-2. Generate/review validation output document"	Record appears on the Remediated tab of the validation output document	Medium	Not Run
-TC-11	Remediated Not Blank – Certified	Verify Certified + Remediated: instance flagged as Manager Error for Analytics	OIM upload: Remediated = populated; CERT_ACTION = Certified; CERTIFIER_ID = valid	"1. Upload record
-2. Review Analytics/reporting for Manager Error flag"	Instance is flagged as Manager Error in Analytics data	Medium	Not Run
-TC-12	Remediated Not Blank – Revoked	Verify Revoked + Remediated: record added to Revoke Complete tab using CERTIFIER_ID	OIM upload: Remediated = populated; CERT_ACTION = Revoked; CERTIFIER_ID = valid UserID	"1. Prepare upload file with above values
-2. Upload
-3. Check Revoke Complete tab"	Record appears on Revoke Complete tab with CERTIFIER_ID UserID as request info details	High	Not Run
-TC-13	Remediated Not Blank – Revoked	Verify Revoked + Remediated: CERTIFIER_ID blank causes upload rejection	OIM upload: Remediated = populated; CERT_ACTION = Revoked; CERTIFIER_ID = blank	"1. Prepare upload with CERTIFIER_ID blank
-2. Upload
-3. Check task log"	Record is rejected during upload	High	Not Run
-TC-14	Remediated Not Blank – Revoked	Verify Revoked + Remediated: Manager Decision = Revoked and Current Appropriateness = Revoked	OIM upload: Remediated = populated; CERT_ACTION = Revoked; CERTIFIER_ID = valid	"1. Upload record
-2. Review Manager Decision and Current Appropriateness fields"	Manager Decision = 'Revoked'; Current Appropriateness = 'Revoked'	High	Not Run
-TC-15	Remediated Not Blank – Revoked	Verify Revoked + Remediated: record on Remediated tab of validation output doc	OIM upload: Remediated = populated; CERT_ACTION = Revoked; CERTIFIER_ID = valid	"1. Upload record
-2. Check validation output document"	Record appears on Remediated tab of validation output document	Medium	Not Run
-TC-16	Remediated Not Blank – Not Required	Verify Not Required + Remediated: record added to Revoke Complete tab using Current Manager	OIM upload: Remediated = populated; CERT_ACTION = Not Required; CERTIFIER_ID = any (ignored)	"1. Prepare upload file
-2. Upload
-3. Check Revoke Complete tab request info details"	Record appears on Revoke Complete tab using Current Manager (not CERTIFIER_ID) for request info	High	Not Run
-TC-17	Remediated Not Blank – Not Required	Verify Not Required + Remediated: CERTIFIER_ID is ignored regardless of value	OIM upload: Remediated = populated; CERT_ACTION = Not Required; CERTIFIER_ID = blank or populated	"1. Upload with CERTIFIER_ID blank
-2. Upload again with CERTIFIER_ID populated
-3. Compare results"	Both uploads succeed; CERTIFIER_ID value makes no difference to the outcome	Medium	Not Run
-TC-18	Remediated Not Blank – Not Required	Verify Not Required + Remediated: Manager Decision = Not Required; AO Decision = Revoke	OIM upload: Remediated = populated; CERT_ACTION = Not Required	"1. Upload record
-2. Review Manager Decision and AO Decision fields"	Manager Decision = 'Not Required'; AO Decision = 'Revoke'	High	Not Run
-TC-19	Remediated Not Blank – Not Required	Verify Not Required + Remediated: Current Appropriateness = Revoked; record on Remediated tab	OIM upload: Remediated = populated; CERT_ACTION = Not Required	"1. Upload record
-2. Review Current Appropriateness and validation output document"	Current Appropriateness = 'Revoked'; record on Remediated tab in output doc	Medium	Not Run
-TC-20	Remediated Not Blank – No Decision	Verify No Decision + Remediated: record added to Revoke Complete tab using CERTIFIER_ID	OIM upload: Remediated = populated; CERT_ACTION = No Decision; CERTIFIER_ID = valid	"1. Upload
-2. Check Revoke Complete tab"	Record on Revoke Complete tab with CERTIFIER_ID as request info details	High	Not Run
-TC-21	Remediated Not Blank – No Decision	Verify No Decision + Remediated: CERTIFIER_ID blank causes upload rejection	OIM upload: Remediated = populated; CERT_ACTION = No Decision; CERTIFIER_ID = blank	"1. Upload with blank CERTIFIER_ID
-2. Check task log"	Record rejected during upload	High	Not Run
-TC-22	Remediated Not Blank – No Decision	Verify No Decision + Remediated: Manager Decision = No Decision; AO Decision = Revoke	OIM upload: Remediated = populated; CERT_ACTION = No Decision; CERTIFIER_ID = valid	"1. Upload
-2. Review Manager Decision and AO Decision fields"	Manager Decision = 'No Decision'; AO Decision = 'Revoke'; Current Appropriateness = 'Revoked'	High	Not Run
-TC-23	Remediated Not Blank – No Decision	Verify No Decision + Remediated: record on Remediated tab and flagged as Manager Error	OIM upload: Remediated = populated; CERT_ACTION = No Decision; CERTIFIER_ID = valid	"1. Upload
-2. Check validation output document and Analytics"	Record on Remediated tab in output doc; flagged as Manager Error in Analytics	Medium	Not Run
-TC-24	Remediated Blank – Certified	Verify Certified + Remediated blank: Manager Decision = Certified	OIM upload: OUT_OF_SCOPE = blank; Remediated = blank; CERT_ACTION = Certified; CERTIFIER_ID = valid	"1. Upload
-2. Review Manager Decision"	Manager Decision = 'Certified'	High	Not Run
-TC-25	Remediated Blank – Certified	Verify Certified + Remediated blank: CERTIFIER_ID blank causes rejection	OIM upload: Remediated = blank; CERT_ACTION = Certified; CERTIFIER_ID = blank	"1. Upload with blank CERTIFIER_ID
-2. Check task log"	Record rejected during upload	High	Not Run
-TC-26	Remediated Blank – Certified	Verify Certified + Remediated blank: Current Appropriateness uses green/yellow/red method	OIM upload: Remediated = blank; CERT_ACTION = Certified; CERTIFIER_ID = valid	"1. Upload
-2. Review Current Appropriateness field"	Current Appropriateness reflects standard green/yellow/red calculation (NOT forced to Revoked)	High	Not Run
-TC-27	Remediated Blank – Certified	Verify Certified + Remediated blank: record on assigned tab in validation output doc	OIM upload: Remediated = blank; CERT_ACTION = Certified; CERTIFIER_ID = valid	"1. Upload
-2. Review validation output document"	Record on the assigned tab (per green/yellow/red method), NOT on Remediated tab	Medium	Not Run
-TC-28	Remediated Blank – Revoked	Verify Revoked + Remediated blank: record is rejected during upload	OIM upload: Remediated = blank; CERT_ACTION = Revoked	"1. Prepare upload file with CERT_ACTION = Revoked and Remediated blank
-2. Upload
-3. Check task log"	Record is rejected during upload; cannot upload a Revoked record without Remediated # populated	High	Not Run
-TC-29	Remediated Blank – Not Required	Verify Not Required + Remediated blank: CERTIFIER_ID should be blank	OIM upload: Remediated = blank; CERT_ACTION = Not Required	"1. Upload with CERTIFIER_ID blank
-2. Check result"	Upload succeeds with blank CERTIFIER_ID	Medium	Not Run
-TC-30	Remediated Blank – Not Required	Verify Not Required + Remediated blank: Manager Decision = Not Required	OIM upload: Remediated = blank; CERT_ACTION = Not Required; CERTIFIER_ID = blank	"1. Upload
-2. Review Manager Decision field"	Manager Decision = 'Not Required' based on upload value	High	Not Run
-TC-31	Remediated Blank – Not Required	Verify Not Required + Remediated blank: Current Appropriateness uses green/yellow/red method	OIM upload: Remediated = blank; CERT_ACTION = Not Required	"1. Upload
-2. Review Current Appropriateness and validation output"	Current Appropriateness uses standard green/yellow/red method; record on assigned tab in output	Medium	Not Run
-TC-32	Remediated Blank – No Decision	Verify No Decision + Remediated blank: CERTIFIER_ID blank causes rejection	OIM upload: Remediated = blank; CERT_ACTION = No Decision; CERTIFIER_ID = blank	"1. Upload with blank CERTIFIER_ID
-2. Check task log"	Record rejected during upload	High	Not Run
-TC-33	Remediated Blank – No Decision	Verify No Decision + Remediated blank: Manager Decision = No Decision	OIM upload: Remediated = blank; CERT_ACTION = No Decision; CERTIFIER_ID = valid	"1. Upload
-2. Review Manager Decision field"	Manager Decision = 'No Decision' based on upload value	High	Not Run
-TC-34	Remediated Blank – No Decision	Verify No Decision + Remediated blank: Current Appropriateness uses green/yellow/red method	OIM upload: Remediated = blank; CERT_ACTION = No Decision; CERTIFIER_ID = valid	"1. Upload
-2. Review Current Appropriateness and validation output doc"	Current Appropriateness uses standard green/yellow/red method; record on assigned tab in output	Medium	Not Run
-TC-35	CERTIFIER_ID Validation	Verify CERTIFIER_ID validation applies across all applicable CERT_ACTION values	OIM upload files: one per scenario (Certified, Revoked, No Decision) all with blank CERTIFIER_ID	"1. For each of Certified, Revoked, No Decision with Remediated blank: upload with CERTIFIER_ID blank
-2. Check result for each"	All three are rejected during upload; task log shows CERTIFIER_ID blank as the rejection reason	High	Not Run
-TC-36	CERTIFIER_ID Validation	Verify CERTIFIER_ID is ignored/not required for Not Required CERT_ACTION	OIM upload: CERT_ACTION = Not Required; Remediated = blank; CERTIFIER_ID = blank	"1. Upload with CERTIFIER_ID blank
-2. Verify upload succeeds"	Upload is accepted; CERTIFIER_ID blank does not cause rejection for Not Required	Medium	Not Run
-TC-37	Regression	Verify non-OIM uploaded records are unaffected by this change	Records entered/processed through standard (non-OIM) certification process	"1. Process a standard certification (non-OIM)
-2. Verify all decisions, tabs, and output documents behave as before"	No change in behavior for non-OIM records; no regression introduced	High	Not Run
-TC-38	Regression	Verify task log reflects correct accepted/rejected counts after OIM upload with mixed records	OIM upload file with mix of valid and invalid records across different CERT_ACTION/Remediated combinations	"1. Upload a mixed file
-2. Review the task log"	Task log correctly records number of records accepted and number rejected, matching the file composition	Medium	Not Run<img width="1441" height="2301" alt="image" src="https://github.com/user-attachments/assets/70d546ad-b784-4607-88ae-73c0e52e64ce" />
+I’m setting up the accounts-payable-invoice-processing project locally on a Windows corporate laptop so I can run the ReadyAPI test suite locally.
+
+Please continue from my CURRENT state below. First inspect the repository README/setup documentation and relevant config/code before suggesting commands. I want to follow the project’s intended setup flow rather than inventing workarounds.
+
+Goal
+
+Get the full local ReadyAPI environment working and run the ReadyAPI smoke/E2E test suite locally.
+
+What has already been completed
+
+1. Repository
+
+* The accounts-payable-invoice-processing repo is cloned locally.
+* I am running commands from the project root.
+
+2. Podman / AlloyDB Omni
+
+Podman is installed and running through WSL2.
+
+Initially I had SSL certificate errors pulling the AlloyDB image. Lili helped me resolve this by using TLS verification disabled for the pull.
+
+The image is successfully downloaded:
+
+google/alloydbomni:15
+
+A Podman volume was created:
+
+alloydb-volume
+
+The local container is running as:
+
+alloydb-local
+
+Port mapping:
+
+5432:5432
+
+podman ps shows the container running successfully.
+
+3. Local PostgreSQL / AlloyDB database
+
+The database was created:
+
+ap_invoice_processing
+
+A local DB user was created:
+
+ap_user
+
+Privileges were granted to ap_user.
+
+I can successfully connect inside the container:
+
+podman exec -it alloydb-local psql -U ap_user -d ap_invoice_processing
+
+and get:
+
+ap_invoice_processing=>
+
+I also tested the connection FROM WINDOWS HOST using:
+
+psql -h 127.0.0.1 -p 5432 -U ap_user -d ap_invoice_processing -c "SELECT 1;"
+
+and it successfully returned 1.
+
+So host-to-database connectivity and the local DB credentials are working.
+
+Do NOT ask me to share the DB password. It is already configured locally.
+
+4. Python version problem was fixed
+
+Initially Python 3.15 was being used, which caused dependency/build problems, including PyYAML build failures.
+
+The project documentation specifies Python 3.13.x.
+
+Python 3.13 is now installed.
+
+A project virtual environment was created:
+
+.venv
+
+The Python inside .venv reports:
+
+Python 3.13.17
+
+PowerShell blocks Activate.ps1 because of corporate execution policy, so I intentionally do NOT activate the venv.
+
+Instead I run everything explicitly using:
+
+.\.venv\Scripts\python.exe
+
+5. Python dependencies
+
+Initially we were installing missing packages individually because imports were failing (uvicorn, functions-framework, google-auth, google-api-python-client, pydantic, Firestore, psycopg, etc.).
+
+After switching to Python 3.13, I ran the correct project dependency install:
+
+.\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
+
+This completed successfully.
+
+So please do NOT continue installing packages one-by-one unless the repository explicitly requires something additional.
+
+6. PYTHONPATH/import issue
+
+Earlier the project could not import the top-level function package.
+
+Setting project root as PYTHONPATH resolved it:
+
+$env:PYTHONPATH = (Get-Location).Path
+
+After that:
+
+python -c "import function; print('Import successful')"
+
+worked.
+
+If this environment setting is required again, account for it.
+
+7. Local Email Service
+
+The local email service now starts successfully using the venv Python.
+
+Command used:
+
+.\.venv\Scripts\python.exe scripts\run_local_server.py email
+
+The server starts on:
+
+http://0.0.0.0:8002
+
+The health endpoint works:
+
+curl.exe http://localhost:8002/health
+
+returns:
+
+{"status":"ok"}
+
+and the server logs show HTTP 200 OK.
+
+So the local email service is working.
+
+8. ReadyAPI secrets/config
+
+The repository contains:
+
+readyapi\env\dev.properties
+
+and:
+
+readyapi\env\local.secrets.properties.example
+
+Initially local.secrets.properties did not exist.
+
+I copied the example and created:
+
+readyapi\env\local.secrets.properties
+
+Lili provided/helped me obtain the required Apigee and Workday credentials.
+
+The real client IDs/secrets are now populated in local.secrets.properties.
+
+DO NOT print, expose, log, or ask me to paste these secrets.
+
+The local DB values are also configured in this file.
+
+The local email endpoint is configured as:
+
+email_service_url=http://localhost:8002
+
+The OIDC local bypass config is also part of this local setup.
+
+9. Setup/validator script
+
+The project’s local setup script is located here:
+
+.gemini\skills\readyapi-local-dev-setup\scripts\setup_local_env.py
+
+I run it using:
+
+.\.venv\Scripts\python.exe .\.gemini\skills\readyapi-local-dev-setup\scripts\setup_local_env.py
+
+The validator currently reports:
+
+* ReadyAPI TestRunner detected ✅
+* AlloyDB container detected/listening on 127.0.0.1:5432 ✅
+* Database connection succeeds ✅
+* Local Email Service online / health returns 200 ✅
+* Local Secrets File configured ✅
+
+BUT it says the database table:
+
+processed_emails
+
+does not exist.
+
+The validator specifically says:
+
+Connected to database 'ap_invoice_processing', but table 'processed_emails' was not found. Please run: alembic upgrade head
+
+Therefore the only major setup item currently blocking readiness is the database migration/schema creation.
+
+CURRENT PROBLEM: Alembic migration
+
+The README’s local AlloyDB section explicitly lists:
+
+alembic upgrade head
+
+after creating the database.
+
+I tried:
+
+.\.venv\Scripts\python.exe -m alembic upgrade head
+
+but the process stalled while connecting to PostgreSQL. I eventually interrupted it, and the traceback ended in psycopg/SQLAlchemy connection code with:
+
+KeyboardInterrupt
+
+We investigated the Alembic configuration.
+
+There is an alembic.ini at the project root.
+
+This command:
+
+Select-String -Path .\alembic.ini -Pattern "sqlalchemy.url"
+
+shows that it contains:
+
+sqlalchemy.url = postgresql+psycopg://postgres:postgres@localhost:5432/ap_invoice_processing
+
+There is also:
+
+.\alembic\env.py
+
+Searching it showed:
+
+* it imports the project database Base
+* it reads:
+    url = config.get_main_option("sqlalchemy.url")
+
+We did NOT find evidence that env.py overrides the Alembic URL using the values in local.secrets.properties.
+
+Important: the working local DB user is NOT necessarily the hard-coded postgres:postgres from alembic.ini.
+
+The ReadyAPI local DB config uses the local ap_user credentials and host connection using those credentials works successfully.
+
+We briefly considered creating a separate alembic.local.ini with the working local credentials, but STOPPED before proceeding because the README specifically says simply alembic upgrade head, and I want to understand the repository’s intended approach first.
+
+What I need you to do now
+
+Please inspect:
+
+1. README_LOCAL_DEV_SETUP.md
+2. the relevant AlloyDB/migration sections
+3. alembic.ini
+4. alembic/env.py
+5. function/common/database.py
+6. any local setup scripts/config that populate DB credentials
+7. references in the repo to alembic upgrade head, sqlalchemy.url, DB environment variables, or local AlloyDB credentials
+
+Then determine the PROJECT-INTENDED way to run the Alembic migrations locally.
+
+Do not immediately edit tracked repo files or invent a new config file unless the repo/documentation clearly indicates that is expected.
+
+Specifically answer:
+
+* Why does alembic.ini use postgres:postgres while the local setup uses ap_user?
+* Is the local AlloyDB container expected to have a postgres user with password postgres?
+* Does the container startup command in the README imply a particular postgres password?
+* Should migrations be run as postgres, ap_user, or another role?
+* Is there an intended environment variable/config override for sqlalchemy.url?
+* Do I need to run Alembic from a particular shell/environment?
+* What exact command should I run next?
+
+After the migration succeeds, rerun the validator:
+
+.\.venv\Scripts\python.exe .\.gemini\skills\readyapi-local-dev-setup\scripts\setup_local_env.py
+
+The target is for all pre-flight checks to turn green.
+
+After that, according to the validator, the next steps are approximately:
+
+Smoke test:
+python .gemini/skills/readyapi-local-dev-setup/scripts/setup_local_env.py --smoke
+
+Full E2E:
+python .gemini/skills/readyapi-local-dev-setup/scripts/setup_local_env.py --e2e
+
+ReadyAPI GUI:
+open:
+readyapi/ap-e2e-soapui-project.xml
+
+then run the appropriate E2E suite (the validator mentions E2E-Reference -> InvoiceToWorkday).
+
+But DO NOT jump to E2E yet. First resolve the Alembic/database migration correctly and verify the validator is fully green.
+
+Please guide me one command at a time and explain briefly what each command is checking. Do not expose any secrets from local.secrets.properties.

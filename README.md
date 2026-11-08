@@ -1,298 +1,347 @@
-I’m setting up the accounts-payable-invoice-processing project locally on a Windows corporate laptop so I can run the ReadyAPI test suite locally.
+QA Automation Ticket Analysis – Workday Ad Hoc Payment
 
-Please continue from my CURRENT state below. First inspect the repository README/setup documentation and relevant config/code before suggesting commands. I want to follow the project’s intended setup flow rather than inventing workarounds.
+Your Role
 
-Goal
+Act as a Senior QA Automation Engineer with expertise in:
 
-Get the full local ReadyAPI environment working and run the ReadyAPI smoke/E2E test suite locally.
+* ReadyAPI / SoapUI
+* Groovy scripting
+* Workday SOAP APIs
+* API test automation
+* JSON fixture files
+* XML response validation
+* Google Cloud Build
+* Allure reporting
 
-What has already been completed
+I am a new QA Automation Engineer on this project. I recently completed my local environment setup and cloned the automation framework repository.
 
-1. Repository
+I had a knowledge-transfer meeting with another QA engineer who explained my first automation ticket.
 
-* The accounts-payable-invoice-processing repo is cloned locally.
-* I am running commands from the project root.
+I need you to analyze the existing repository, understand the automation framework, identify the existing test scenario, and help me determine what needs to be implemented.
 
-2. Podman / AlloyDB Omni
+Important: Do not modify any files, create branches, commit changes, or execute tests until we have reviewed the implementation plan. Start with analysis only.
 
-Podman is installed and running through WSL2.
+1. Background and Ticket Context
 
-Initially I had SSL certificate errors pulling the AlloyDB image. Lili helped me resolve this by using TLS verification disabled for the pull.
+The ticket is related to a Workday Ad Hoc Payment scenario.
 
-The image is successfully downloaded:
+Based on the meeting, this scenario is likely already automated, but some detailed assertions may be missing.
 
-google/alloydbomni:15
+The existing test case is believed to be:
 
-A Podman volume was created:
+* Test scenario: Ad Hoc Payment
+* Existing test case: Number 9
+* Reference: UAT spreadsheet, test case #9
+* Payment scenario: Rental car reimbursement
+* Supporting documentation: Multiple attachments, including a JPEG
+* Target environment: DEV
+* Source branch: dev
 
-alloydb-volume
+The reimbursement scenario involves rental car costs while a vehicle is being repaired.
 
-The local container is running as:
+The main goal is to verify that the automation correctly validates all relevant payment details against the ticket requirements.
 
-alloydb-local
+Do not assume these details are implemented correctly until you inspect the actual repository.
 
-Port mapping:
+2. Understand the Existing Automation Framework
 
-5432:5432
+First, scan the repository and explain:
 
-podman ps shows the container running successfully.
+1. The overall project structure.
+2. How ReadyAPI test suites are organized.
+3. Where the test cases are defined.
+4. How Groovy scripts are used.
+5. Where JSON fixture files are stored.
+6. How fixture data is loaded into requests.
+7. How the Workday Ad Hoc Payment request is constructed.
+8. How requests are submitted.
+9. How SOAP/XML responses are processed.
+10. Where existing assertions are implemented.
+11. How tests are executed from the command line.
+12. How Allure reports are generated.
 
-3. Local PostgreSQL / AlloyDB database
+Please explain everything in beginner-friendly language because I am still learning this framework.
 
-The database was created:
+Include actual file paths, function names, and relevant code references from the repository.
 
-ap_invoice_processing
+3. Locate Existing Test Case #9
 
-A local DB user was created:
+Search the repository for the existing Ad Hoc Payment test case.
 
-ap_user
+The engineer mentioned that test case #9 already covers most of the scenario.
 
-Privileges were granted to ap_user.
+Find:
 
-I can successfully connect inside the container:
+* The ReadyAPI test suite containing the scenario.
+* The JSON fixture corresponding to test case #9.
+* The request payload.
+* The existing attachments.
+* The Groovy logic responsible for processing the scenario.
+* Existing assertions and response validations.
 
-podman exec -it alloydb-local psql -U ap_user -d ap_invoice_processing
+Check whether the fixture contains multiple attachments and whether one of them is a JPEG.
 
-and get:
+Compare the existing implementation with the rental car reimbursement scenario.
 
-ap_invoice_processing=>
+Determine whether this test is fully implemented, partially implemented, or missing required validations.
 
-I also tested the connection FROM WINDOWS HOST using:
+Do not assume that test case #9 is necessarily the correct test until verified.
 
-psql -h 127.0.0.1 -p 5432 -U ap_user -d ap_invoice_processing -c "SELECT 1;"
+4. Investigate the Ad Hoc Payment Request Logic
 
-and it successfully returned 1.
+During the meeting, the engineer demonstrated a conditional statement around line 796 in the existing implementation.
 
-So host-to-database connectivity and the local DB credentials are working.
+The logic was described approximately as:
 
-Do NOT ask me to share the DB password. It is already configured locally.
+If the scenario is Ad Hoc Payment, the framework calls the logic that builds the Ad Hoc Payment request.
 
-4. Python version problem was fixed
+Search for the actual implementation, including any function resembling:
 
-Initially Python 3.15 was being used, which caused dependency/build problems, including PyYAML build failures.
+buildAdHocPaymentRequest
 
-The project documentation specifies Python 3.13.x.
+The function name may differ, so search by functionality as well.
 
-Python 3.13 is now installed.
+Explain:
 
-A project virtual environment was created:
+* How the scenario is identified.
+* Which fixture fields are read.
+* How those fields are mapped into the request body.
+* How payment information is constructed.
+* How attachments are processed.
+* Where the request is submitted.
+* What response is returned.
 
-.venv
+If new fixture fields are required, identify where those changes would need to be made.
 
-The Python inside .venv reports:
+Provide exact file paths and code locations.
 
-Python 3.13.17
+5. Analyze Required Validations
 
-PowerShell blocks Activate.ps1 because of corporate execution policy, so I intentionally do NOT activate the venv.
+The engineer specifically mentioned that we need to verify whether the following values are properly asserted:
 
-Instead I run everything explicitly using:
+A. Payee Validation
 
-.\.venv\Scripts\python.exe
+* Verify the correct payee.
+* Identify the source fixture field.
+* Identify the corresponding response field.
+* Determine whether an assertion already exists.
 
-5. Python dependencies
+B. Payment Amount
 
-Initially we were installing missing packages individually because imports were failing (uvicorn, functions-framework, google-auth, google-api-python-client, pydantic, Firestore, psycopg, etc.).
+* Verify the expected reimbursement amount.
+* Compare the request and response values.
+* Identify any missing assertion.
 
-After switching to Python 3.13, I ran the correct project dependency install:
+C. Currency
 
-.\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
+* Verify the expected currency.
+* Determine whether the current automation validates it.
 
-This completed successfully.
+D. Financial Coding
 
-So please do NOT continue installing packages one-by-one unless the repository explicitly requires something additional.
+* Identify financial coding fields relevant to the payment.
+* Verify whether they are properly populated.
+* Determine whether corresponding response assertions exist.
 
-6. PYTHONPATH/import issue
+E. Workday Validation Errors
 
-Earlier the project could not import the top-level function package.
+* Confirm that the Ad Hoc Payment is submitted successfully.
+* Verify that the Workday response does not contain validation errors.
+* Identify how the current automation detects submission failures.
 
-Setting project root as PYTHONPATH resolved it:
+F. Attachments
 
-$env:PYTHONPATH = (Get-Location).Path
+* Verify that the scenario contains the expected supporting attachments.
+* Confirm that one attachment is a JPEG, if supported by the fixture.
+* Determine whether the existing test validates the attachment information.
 
-After that:
+G. Reimbursement Reason
 
-python -c "import function; print('Import successful')"
+The ticket may require validation of the reimbursement reason.
 
-worked.
+The scenario context is rental car reimbursement while the employee’s vehicle is being repaired.
 
-If this environment setting is required again, account for it.
+Investigate:
 
-7. Local Email Service
+* Whether the reimbursement reason exists in the fixture.
+* Whether it maps to a memo, description, or another Workday field.
+* Whether the value is included in the outgoing request.
+* Whether the Workday response contains a field that can be validated.
+* Whether an assertion already exists.
 
-The local email service now starts successfully using the venv Python.
+Do not guess the reimbursement reason field mapping.
 
-Command used:
+If the correct field cannot be established from the repository, flag it as an open question for Daniel Hanks, who has Workday experience.
 
-.\.venv\Scripts\python.exe scripts\run_local_server.py email
+6. Analyze SOAP Response Assertions
 
-The server starts on:
+The engineer explained that the Workday proxy API returns a SOAP/XML response containing more detailed information than the simpler Workday service response.
 
-http://0.0.0.0:8002
+Find the code that:
 
-The health endpoint works:
+1. Sends the Workday SOAP request.
+2. Receives the SOAP/XML response.
+3. Parses the response.
+4. Extracts payment details.
+5. Performs assertions.
 
-curl.exe http://localhost:8002/health
+Determine which additional assertions can be added using the existing response data.
 
-returns:
+For each missing validation, provide:
 
-{"status":"ok"}
+* Expected value source.
+* Actual response field.
+* XML path or field mapping, if verifiable.
+* Existing assertion pattern.
+* Proposed assertion logic.
+* Exact implementation location.
 
-and the server logs show HTTP 200 OK.
+Follow the existing Groovy coding style and assertion patterns.
 
-So the local email service is working.
+Do not invent XML paths or response fields.
 
-8. ReadyAPI secrets/config
+7. Compare Implementation Against Ticket Requirements
 
-The repository contains:
+If the Jira ticket details or UAT spreadsheet are not available in the repository, clearly identify what information I need to provide.
 
-readyapi\env\dev.properties
+Create a gap-analysis table containing:
 
-and:
+Requirement	Existing Implementation	Assertion Exists?	Missing Work	File Location
+Payee				
+Amount				
+Currency				
+Financial coding				
+Workday validation errors				
+Attachments				
+Reimbursement reason				
 
-readyapi\env\local.secrets.properties.example
+Use the following statuses:
 
-Initially local.secrets.properties did not exist.
+* Implemented and verified in code
+* Partially implemented
+* Missing
+* Needs clarification
+* Unable to verify
 
-I copied the example and created:
+Do not mark anything complete without supporting code evidence.
 
-readyapi\env\local.secrets.properties
+8. Important Git Branch Instructions
 
-Lili provided/helped me obtain the required Apigee and Workday credentials.
+The engineer specifically instructed me NOT to create a feature branch yet.
 
-The real client IDs/secrets are now populated in local.secrets.properties.
+Current situation:
 
-DO NOT print, expose, log, or ask me to paste these secrets.
+* main is the release branch.
+* dev is the development branch.
+* The engineer has a pending refactor PR.
+* The refactor moves Groovy scripts out of the large ReadyAPI XML project file into separate script files.
+* The refactor is intended to reduce merge conflicts.
+* The functional behavior should remain unchanged.
+* I must wait for confirmation that the refactor PR has been merged before creating my working branch.
 
-The local DB values are also configured in this file.
+For now:
 
-The local email endpoint is configured as:
+* Inspect the existing dev branch.
+* Understand the code.
+* Identify missing validations.
+* Prepare an implementation plan.
+* Do not create a new branch.
+* Do not merge or push changes.
 
-email_service_url=http://localhost:8002
+Explain how the pending refactor might affect the file locations where assertions should eventually be added.
 
-The OIDC local bypass config is also part of this local setup.
+9. Test Execution and Allure Reporting
 
-9. Setup/validator script
+The engineer recommended running tests from the command line instead of editing through the ReadyAPI desktop application.
 
-The project’s local setup script is located here:
+Important warning:
 
-.gemini\skills\readyapi-local-dev-setup\scripts\setup_local_env.py
+Opening and saving the project in ReadyAPI Desktop may introduce unwanted custom properties or local configuration into the project XML.
 
-I run it using:
+Therefore:
 
-.\.venv\Scripts\python.exe .\.gemini\skills\readyapi-local-dev-setup\scripts\setup_local_env.py
+* Do not save or modify the project using ReadyAPI Desktop.
+* Prefer the documented command-line execution process.
+* Find the existing commands in the README or project scripts.
+* Identify how to execute test case #9 or the relevant suite.
+* Identify the Python script used to launch Allure reports.
+* Explain how to activate the Python virtual environment.
+* Explain how to view reports from a local run.
+* Explain how Google Cloud Build artifacts can be loaded using a build ID.
 
-The validator currently reports:
+Do not invent commands.
 
-* ReadyAPI TestRunner detected ✅
-* AlloyDB container detected/listening on 127.0.0.1:5432 ✅
-* Database connection succeeds ✅
-* Local Email Service online / health returns 200 ✅
-* Local Secrets File configured ✅
+Use only verified commands from the repository documentation.
 
-BUT it says the database table:
+Do not execute tests yet. First explain the commands and any prerequisites.
 
-processed_emails
+10. Gemini CLI and Google Cloud Setup
 
-does not exist.
+The engineer mentioned that Gemini CLI may require a Google Cloud project ID environment variable.
 
-The validator specifically says:
+Review any repository documentation explaining:
 
-Connected to database 'ap_invoice_processing', but table 'processed_emails' was not found. Please run: alembic upgrade head
+* Required Google Cloud project ID.
+* Authentication prerequisites.
+* Environment variables.
+* Gemini CLI configuration.
+* Google Cloud authentication.
 
-Therefore the only major setup item currently blocking readiness is the database migration/schema creation.
+If configuration is required, explain it for the terminal environment detected.
 
-CURRENT PROBLEM: Alembic migration
+Do not print, expose, or modify credentials, tokens, secrets, or private configuration values.
 
-The README’s local AlloyDB section explicitly lists:
+11. Expected Output
 
-alembic upgrade head
+After completing your analysis, provide the following sections:
 
-after creating the database.
+Part 1 – Framework Overview
 
-I tried:
+Explain the architecture and execution flow in simple terms.
 
-.\.venv\Scripts\python.exe -m alembic upgrade head
+Part 2 – Existing Test Case #9
 
-but the process stalled while connecting to PostgreSQL. I eventually interrupted it, and the traceback ended in psycopg/SQLAlchemy connection code with:
+Identify the exact test, fixture, request construction logic, and assertions.
 
-KeyboardInterrupt
+Part 3 – Ticket Gap Analysis
 
-We investigated the Alembic configuration.
+Show what is already covered and what may be missing.
 
-There is an alembic.ini at the project root.
+Part 4 – Recommended Code Changes
 
-This command:
+Identify exactly which files and code locations may require updates, without editing them.
 
-Select-String -Path .\alembic.ini -Pattern "sqlalchemy.url"
+Part 5 – Open Questions
 
-shows that it contains:
+List anything that requires clarification from the QA engineer, Daniel Hanks, or the ticket owner.
 
-sqlalchemy.url = postgresql+psycopg://postgres:postgres@localhost:5432/ap_invoice_processing
+Part 6 – Step-by-Step Action Plan
 
-There is also:
+Provide a numbered implementation plan for a new QA engineer.
 
-.\alembic\env.py
+Part 7 – Testing and Verification Plan
 
-Searching it showed:
+Explain how to execute the test and verify the results after changes are approved.
 
-* it imports the project database Base
-* it reads:
-    url = config.get_main_option("sqlalchemy.url")
+12. How I Want You to Work With Me
 
-We did NOT find evidence that env.py overrides the Alembic URL using the values in local.secrets.properties.
+I want to work step by step.
 
-Important: the working local DB user is NOT necessarily the hard-coded postgres:postgres from alembic.ini.
+Do not give me a large number of commands to execute at once.
 
-The ReadyAPI local DB config uses the local ap_user credentials and host connection using those credentials works successfully.
+Start by analyzing the repository and explaining what you find.
 
-We briefly considered creating a separate alembic.local.ini with the working local credentials, but STOPPED before proceeding because the README specifically says simply alembic upgrade head, and I want to understand the repository’s intended approach first.
+Then tell me the first recommended action.
 
-What I need you to do now
+Wait for my confirmation before moving to implementation.
 
-Please inspect:
+For every suggested change, explain:
 
-1. README_LOCAL_DEV_SETUP.md
-2. the relevant AlloyDB/migration sections
-3. alembic.ini
-4. alembic/env.py
-5. function/common/database.py
-6. any local setup scripts/config that populate DB credentials
-7. references in the repo to alembic upgrade head, sqlalchemy.url, DB environment variables, or local AlloyDB credentials
+* Why it is necessary.
+* What the current code does.
+* What needs to change.
+* How to verify the change.
 
-Then determine the PROJECT-INTENDED way to run the Alembic migrations locally.
+Prioritize understanding the existing automation and identifying missing assertions rather than writing new automation from scratch.
 
-Do not immediately edit tracked repo files or invent a new config file unless the repo/documentation clearly indicates that is expected.
-
-Specifically answer:
-
-* Why does alembic.ini use postgres:postgres while the local setup uses ap_user?
-* Is the local AlloyDB container expected to have a postgres user with password postgres?
-* Does the container startup command in the README imply a particular postgres password?
-* Should migrations be run as postgres, ap_user, or another role?
-* Is there an intended environment variable/config override for sqlalchemy.url?
-* Do I need to run Alembic from a particular shell/environment?
-* What exact command should I run next?
-
-After the migration succeeds, rerun the validator:
-
-.\.venv\Scripts\python.exe .\.gemini\skills\readyapi-local-dev-setup\scripts\setup_local_env.py
-
-The target is for all pre-flight checks to turn green.
-
-After that, according to the validator, the next steps are approximately:
-
-Smoke test:
-python .gemini/skills/readyapi-local-dev-setup/scripts/setup_local_env.py --smoke
-
-Full E2E:
-python .gemini/skills/readyapi-local-dev-setup/scripts/setup_local_env.py --e2e
-
-ReadyAPI GUI:
-open:
-readyapi/ap-e2e-soapui-project.xml
-
-then run the appropriate E2E suite (the validator mentions E2E-Reference -> InvoiceToWorkday).
-
-But DO NOT jump to E2E yet. First resolve the Alembic/database migration correctly and verify the validator is fully green.
-
-Please guide me one command at a time and explain briefly what each command is checking. Do not expose any secrets from local.secrets.properties.
+Start with repository analysis only. Do not modify anything.

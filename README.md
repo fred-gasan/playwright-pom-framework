@@ -1,17 +1,18 @@
-I have already provided you with the Jira ticket details and acceptance criteria earlier in this conversation.
+One additional important instruction:
 
-Please use those original ticket requirements as the source of truth.
+If you identify any ambiguity, missing business requirements, unclear Workday field mappings, or inconsistencies between the Jira ticket, UAT Scenario 9, and the existing automation, please flag them for clarification.
 
-Before making any changes, review your previous gap analysis and confirm:
+Do not make assumptions or invent values to fill those gaps.
 
-1. Which missing assertions are explicitly required by the Jira ticket?
-2. Which requirements are already covered by UAT Scenario 9?
-3. Which fixture changes are actually necessary to satisfy the ticket?
-4. Are the proposed payee, memo, and reimbursement details taken directly from the ticket, or were they assumptions?
-5. Does the ticket require any additional test scenario, or can we enhance the existing UAT Scenario 9?
+For each issue requiring clarification:
 
-Please provide a final requirement-to-code mapping, including the exact acceptance criteria, existing assertions, missing assertions, and file locations.
+* Explain exactly what is unclear.
+* Explain why clarification is needed.
+* Identify who would be the most appropriate person to ask (QA teammate, ticket owner, or Workday SME).
+* Draft a short, clear, and professional question in English that I can send to my teammate.
 
-Do not modify any files yet.
+Only recommend reaching out when clarification is genuinely necessary. If the answer can be reliably determined from the ticket, existing code, fixture, or documentation, investigate those sources first.
 
-After completing this verification, recommend the smallest safe implementation plan and wait for my approval.
+Do not modify any files or implement changes based on unconfirmed assumptions.
+
+Our goal is to understand the requirements correctly, avoid unnecessary changes, and implement only what the ticket actually requires.

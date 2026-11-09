@@ -1,18 +1,17 @@
-One additional important instruction:
+I approve proceeding with Step 1 review, but not applying any changes yet.
 
-If you identify any ambiguity, missing business requirements, unclear Workday field mappings, or inconsistencies between the Jira ticket, UAT Scenario 9, and the existing automation, please flag them for clarification.
+Please prepare an exact proposed diff for readyapi/fixtures/uat/adhoc-payment-uat-scenario-9.json.
 
-Do not make assumptions or invent values to fill those gaps.
+Important requirements:
 
-For each issue requiring clarification:
+1. Preserve the existing fixture structure, IDs, payment references, amounts, currency, financial coding, and attachments.
+2. Do not invent a new payee name, customer identity, rental dates, or other business data.
+3. Use the Jira ticket as the source of truth.
+4. Clearly separate confirmed ticket requirements from assumptions.
+5. Show the current and proposed values for every field that needs to change.
+6. Check whether changing the payee name could break the existing Workday payee reference.
+7. If rental dates or the exact payee are not provided in the ticket, flag them for clarification rather than creating placeholder values.
 
-* Explain exactly what is unclear.
-* Explain why clarification is needed.
-* Identify who would be the most appropriate person to ask (QA teammate, ticket owner, or Workday SME).
-* Draft a short, clear, and professional question in English that I can send to my teammate.
+Do not edit any files yet.
 
-Only recommend reaching out when clarification is genuinely necessary. If the answer can be reliably determined from the ticket, existing code, fixture, or documentation, investigate those sources first.
-
-Do not modify any files or implement changes based on unconfirmed assumptions.
-
-Our goal is to understand the requirements correctly, avoid unnecessary changes, and implement only what the ticket actually requires.
+Show me the proposed diff and explain the impact of each change. Wait for my approval before applying anything.

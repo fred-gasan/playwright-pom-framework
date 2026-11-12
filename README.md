@@ -1,1 +1,1 @@
-Hi Lily, things are going well. I’ve been reviewing the existing automation and identifying the missing assertions for my ticket. I also reached out to Qurrent for some clarification, but I haven’t heard back yet. In the meantime, I’m continuing to work on the technical analysis. No other questions at the moment. Thanks for checking in!
+Hi Daniel, I hope you’re doing well. I’m currently driving home, so I might be a little late to the call.

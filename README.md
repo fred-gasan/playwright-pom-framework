@@ -1,23 +1,35 @@
-Thanks for the Git hygiene audit.
+ The feature branch has been created successfully.
 
-I approve creating the feature branch, but let’s proceed carefully.
+  ---
 
-Please:
+  1. Current Branch
+   - Branch: feature/fpoap-131-adhoc-payment-validations
 
-1. Confirm that we are still on the local dev branch and that the working tree contains the same changes reported in the audit.
-2. Create the branch:
-    feature/fpoap-131-adhoc-payment-validations
-3. Do not delete, restore, reset, stash, or modify any existing files.
-4. Do not modify .gitignore yet.
-5. Do not stage or commit any files yet.
-6. After creating the branch, show:
-    * Current branch name
-    * git status –short
-    * Confirmation that all existing local changes are preserved
+  ---
 
-Important:
-Do not run git add ., git add -A, git clean, git reset, git pull, or git push.
+  2. Working Tree Status (git status -s)
 
-Do not create a commit or PR yet.
+    1  M entrypoint.sh
+    2  M readyapi/Scripts/AllureListener.groovy
+    3  M readyapi/Scripts/BuildInvoiceRequest.groovy
+    4  M readyapi/Scripts/LoadFixture.groovy
+    5  M readyapi/Scripts/Setup.groovy
+    6  M readyapi/Scripts/VerifyInvoiceDetails.groovy
+    7  M readyapi/ap-e2e-soapui-project.xml
+    8  M readyapi/env/qa.properties
+    9  M readyapi/fixtures/uat/eib-po-invoice-uat-scenario-5.json
+   10  M readyapi/fixtures/uat/eib-po-invoice-uat-scenario-6.json
+   11  M scripts/run_local_server.py
+   12  M tf/readyapi-job/main.tf
+   13 ?? VerifyAdHocPaymentDetails*.class (40 files)
+   14 ?? alembic.local.ini
+   15 ?? readyapi/Scripts/VerifyAdHocPaymentDetails.groovy
+   16 ?? readyapi/view_allure_report.bat
 
-We will review the branch status before selecting the exact files to stage.
+  ---
+
+  3. Confirmation
+   - 100% Preserved: All modified files, local runner enhancements (scripts/run_local_server.py), untracked local configs (alembic.local.ini,
+     view_allure_report.bat), and implementation files (readyapi/Scripts/VerifyAdHocPaymentDetails.groovy, readyapi/ap-e2e-soapui-project.xml) are intact.
+   - Zero Modifications: No files were staged, committed, reset, restored, cleaned, or modified.
+   - Next Step: We are ready to review and select the exact files to stage whenever you approve.

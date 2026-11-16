@@ -1,9 +1,15 @@
-Thanks for the detailed gap analysis. The proposed approach looks aligned with our goal of extending the existing UAT automation without changing the current scenarios.
+Thanks for preparing the proposed Groovy script and XML diff.
 
-Before implementation, please prepare the complete proposed Groovy script and the exact XML diff for review.
+Before applying any changes, please review the complete script against the existing ReadyAPI framework and actual Workday SOAP response structure.
 
-Make sure all new validations use scenario-specific fixture values rather than hardcoded values, and that the script works correctly across UAT scenarios 7, 8, 9, and 10.
+Specifically, verify that:
 
-Preserve all existing assertions, fixtures, and test workflows. Keep rental dates and rental agreement reference validations pending until we receive business clarification.
+1. All UAT 7, 8, 9, and 10 fixture values are loaded dynamically and correctly.
+2. All XPath/XML field mappings match the actual Workday SOAP response.
+3. The project directory and fixture paths resolve correctly in ReadyAPI.
+4. All existing assertions, test steps, fixtures, and workflows remain unchanged.
+5. The new assertions cover only confirmed requirements. Keep rental dates and rental agreement references pending clarification.
 
-Do not modify any files yet. Let’s review the proposed code first.
+Please identify any issues and show the final corrected code for review.
+
+Do not modify any files yet.

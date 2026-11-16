@@ -1,26 +1,26 @@
-Thanks for completing the checkpoint analysis.
+I reviewed your reconciliation and implementation plan.
 
-We have now received clarification from Lily regarding the rental reimbursement scenarios.
+Please proceed with implementing the missing validations for UAT 7, 8, 9, and 10 in:
 
-She confirmed:
+readyapi/Scripts/VerifyAdHocPaymentDetails.groovy
 
-1. Rental period information can be found in the payment memo.
-2. Existing attachments are sufficient for documentation.
-3. Claim numbers and order numbers are ignored by the Current agent and are not used to generate payments.
-4. Reimbursement context is plain text.
-5. Reverse polarity does not affect API functionality and is generally ignored for documentation purposes.
+Follow these requirements strictly:
 
-Please reconcile this clarification with your previous checkpoint analysis for UAT 7, 8, 9, and 10.
+1. Preserve all existing scenarios, fixtures, XML structure, and assertions.
+2. Use dynamic expected values from the existing fixture data.
+3. Implement the confirmed Workday SOAP response validations for currency, total amount, payee, line items, financial coding, and payment status where applicable.
+4. Validate existing attachment count and filenames for UAT 9 and 10.
+5. Validate the existing plain-text memo against the corresponding fixture value where the response exposes it.
+6. Do not add mandatory rental date regex, rental agreement, claim/order number, or reverse polarity assertions.
+7. Follow the existing ReadyAPI Groovy scripting conventions.
+8. Do not modify any unrelated files.
+9. Do not commit or push any changes.
 
-Before implementation:
+After implementation:
 
-* Confirm which proposed validations are still required.
-* Inspect the actual fixture data for rental period information in the memo.
-* Verify the proposed Workday SOAP field mappings against the existing project structure.
-* Preserve all existing scenarios, fixtures, and assertions.
-* Do not introduce additional mandatory business validations that Lily has not requested.
-* Follow the existing ReadyAPI Groovy framework conventions.
+* Show the exact git diff.
+* Explain each new assertion.
+* Run available local validation checks.
+* Report any failures or remaining blockers.
 
-Please provide the final implementation plan, exact files to be modified, and any remaining blockers.
-
-Do not modify any files yet. Wait for my approval.
+Do not create a PR yet. I want to review the changes first.

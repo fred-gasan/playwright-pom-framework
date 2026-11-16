@@ -1,64 +1,28 @@
-Line endings for the two target files have been converted to Unix LF (\n), verified, and selectively staged.
+The staged changes for FPOAP-165 look correct. I approve creating a local commit.
 
-  ---
+Please:
 
-  1. Pre-Staging Verification Results
+1. Confirm the current branch is:
+    feature/fpoap-165-adhoc-payment-validations
+2. Verify that exactly these two files are staged:
+    * readyapi/Scripts/VerifyAdHocPaymentDetails.groovy
+    * readyapi/ap-e2e-soapui-project.xml
+3. Confirm git diff –cached –check is clean.
+4. Create one local commit using this message:
+    [FPOAP-165] Add ReadyAPI Ad-Hoc Payment validations for UAT 7–10
+5. After committing, show:
+    * Commit hash and message
+    * git show –stat –oneline HEAD
+    * git status –short
+    * Confirmation that all unrelated local changes remain untouched
+    * Confirmation that no remote push or PR was created
 
-   - Line Ending Format: Verified Unix LF (\n) on both files.
-   - git diff --check: 0 whitespace errors / 0 trailing \r warnings.
-   - XML Diff Scope: Exactly 56 lines changed (4 insertions, 52 deletions) with zero extraneous line-ending churn.
-   - Groovy Compilation: Succeeded with 0 errors.
-   - ReadyAPI Smoke Test (testrunner.bat -s "Smoke"): PASS (1,730 ms).
+Important:
 
-  ---
+* Do not use git add . or git add -A.
+* Do not stage any additional files.
+* Do not modify .gitignore.
+* Do not reset, restore, clean, or delete local files.
+* Do not push or create a PR yet.
 
-  2. Staged Diff Verification
-
-  A. Staged Files (git diff --cached --name-status)
-
-   1 A       readyapi/Scripts/VerifyAdHocPaymentDetails.groovy
-   2 M       readyapi/ap-e2e-soapui-project.xml
-
-  B. Staged Statistics (git diff --cached --stat)
-
-   1  readyapi/Scripts/VerifyAdHocPaymentDetails.groovy | 179 ++++++++++++++++++++++
-   2  readyapi/ap-e2e-soapui-project.xml                |  56 +------
-   3  2 files changed, 183 insertions(+), 52 deletions(-)
-
-  C. Staged Whitespace & Hygiene Check (git diff --cached --check)
-   - Output: (empty) — Clean, 0 warnings or whitespace errors.
-
-  D. Repository Status (git status --short)
-
-    1  M entrypoint.sh
-    2  M readyapi/Scripts/AllureListener.groovy
-    3  M readyapi/Scripts/BuildInvoiceRequest.groovy
-    4  M readyapi/Scripts/LoadFixture.groovy
-    5  M readyapi/Scripts/Setup.groovy
-    6 A  readyapi/Scripts/VerifyAdHocPaymentDetails.groovy
-    7  M readyapi/Scripts/VerifyInvoiceDetails.groovy
-    8 M  readyapi/ap-e2e-soapui-project.xml
-    9  M readyapi/env/qa.properties
-   10  M readyapi/fixtures/uat/eib-po-invoice-uat-scenario-5.json
-   11  M readyapi/fixtures/uat/eib-po-invoice-uat-scenario-6.json
-   12  M scripts/run_local_server.py
-   13  M tf/readyapi-job/main.tf
-   14 ?? alembic.local.ini
-   15 ?? readyapi/view_allure_report.bat
-
-  ---
-
-  3. Checkpoint Confirmations
-
-   - Exactly Two Files Staged: Only VerifyAdHocPaymentDetails.groovy and ap-e2e-soapui-project.xml are in the index (staged).
-   - Feature Scope Respected:
-     - VerifyAdHocPaymentDetails.groovy contains the complete, fail-fast UAT 7–10 validations (Currency, Total Amount via BigDecimal, Payee, Lines, Financial
-       Coding, Line & Header Memos, Status APPROVED, Address, and Multi-Document Attachments).
-     - ap-e2e-soapui-project.xml is modified only to register the script in Smoke and delegate assertion step 09b-Verify-AdHocPayment-SOAP.
-     - Existing XPath assertions (including memo carries run_id) remain unchanged.
-   - Unrelated Changes Untouched: scripts/run_local_server.py, alembic.local.ini, view_allure_report.bat, and all other files remain completely untouched and
-     unstaged.
-   - No Sensitive Data: No tokens, credentials, or secrets are staged.
-   - No Git Mutations: No commits, pushes, or PRs have been executed.
-
-  Ready for your next instruction.
+If the staged files have changed unexpectedly, stop before committing.

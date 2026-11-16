@@ -1,43 +1,28 @@
-The branch has been renamed. Here is the confirmation report:
+The branch name is now correct: feature/fpoap-165-adhoc-payment-validations.
 
-  ---
+Let’s proceed with selective staging for FPOAP-165.
 
-  1. Current Branch Name
-   - Active Branch: feature/fpoap-165-adhoc-payment-validations
+Please:
 
-  ---
+1. Stage ONLY these two files:
+    * readyapi/Scripts/VerifyAdHocPaymentDetails.groovy
+    * readyapi/ap-e2e-soapui-project.xml
+2. Before staging, verify that the XML file does not contain unrelated CRLF/LF changes. If it does, stop and report the issue rather than staging unrelated changes.
+3. After staging, run:
+    * git diff –cached –name-status
+    * git diff –cached –stat
+    * git diff –cached –check
+    * git status –short
+4. Review the staged diff and confirm:
+    * Exactly two files are staged.
+    * The new Groovy script contains the intended UAT 7–10 validations.
+    * The XML changes are limited to registering and invoking the new script.
+    * No credentials, secrets, local configuration, generated files, or unrelated changes are staged.
+    * Existing XPath assertions remain unchanged.
+5. Confirm all other local changes remain untouched and unstaged.
 
-  2. Preservation of Working Tree Changes (git status -s)
-  All modified and untracked files remain 100% intact:
+Do not modify .gitignore, delete files, commit, push, or create a PR yet.
 
-    1  M entrypoint.sh
-    2  M readyapi/Scripts/AllureListener.groovy
-    3  M readyapi/Scripts/BuildInvoiceRequest.groovy
-    4  M readyapi/Scripts/LoadFixture.groovy
-    5  M readyapi/Scripts/Setup.groovy
-    6  M readyapi/Scripts/VerifyInvoiceDetails.groovy
-    7  M readyapi/ap-e2e-soapui-project.xml
-    8  M readyapi/env/qa.properties
-    9  M readyapi/fixtures/uat/eib-po-invoice-uat-scenario-5.json
-   10  M readyapi/fixtures/uat/eib-po-invoice-uat-scenario-6.json
-   11  M scripts/run_local_server.py
-   12  M tf/readyapi-job/main.tf
-   13 ?? VerifyAdHocPaymentDetails*.class (40 files)
-   14 ?? alembic.local.ini
-   15 ?? readyapi/Scripts/VerifyAdHocPaymentDetails.groovy
-   16 ?? readyapi/view_allure_report.bat
+If you discover any unexpected changes or sensitive content, stop and report them before proceeding.
 
-  ---
-
-  3. Staging Status
-   - git diff --staged: Completely empty (0 files staged, 0 changes staged).
-
-  ---
-
-  4. Remote Branch Status
-   - Local Branch Only: No remote branch has been created or pushed (git branch -vv shows feature/fpoap-165-adhoc-payment-validations without an upstream remote
-     tracking branch).
-
-  ---
-
-  Ready for your next instruction.
+Please provide the exact staged file list, diff summary, and any warnings.

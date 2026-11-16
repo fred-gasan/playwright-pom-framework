@@ -1,28 +1,52 @@
-The branch name is now correct: feature/fpoap-165-adhoc-payment-validations.
+Line-Ending Verification Report (Pre-Staging Stop)
 
-Let’s proceed with selective staging for FPOAP-165.
+  In strict accordance with Instruction 2 ("Before staging, verify that the XML file does not contain unrelated CRLF/LF changes. If it does, stop and report the
+  issue rather than staging unrelated changes"), I have stopped before staging any files.
 
-Please:
+  ---
 
-1. Stage ONLY these two files:
-    * readyapi/Scripts/VerifyAdHocPaymentDetails.groovy
-    * readyapi/ap-e2e-soapui-project.xml
-2. Before staging, verify that the XML file does not contain unrelated CRLF/LF changes. If it does, stop and report the issue rather than staging unrelated changes.
-3. After staging, run:
-    * git diff –cached –name-status
-    * git diff –cached –stat
-    * git diff –cached –check
-    * git status –short
-4. Review the staged diff and confirm:
-    * Exactly two files are staged.
-    * The new Groovy script contains the intended UAT 7–10 validations.
-    * The XML changes are limited to registering and invoking the new script.
-    * No credentials, secrets, local configuration, generated files, or unrelated changes are staged.
-    * Existing XPath assertions remain unchanged.
-5. Confirm all other local changes remain untouched and unstaged.
+  1. Issue Discovered: Repository Line-Ending (CRLF vs. LF) Mismatch
 
-Do not modify .gitignore, delete files, commit, push, or create a PR yet.
+   - Git Tracking Reality: The repository upstream (origin/dev) standardizes on Unix LF line endings (\n) (established in commit 336f4b7: "normalize entrypoint.sh
+     and groovy scripts to Unix LF line endings").
+   - Local Windows Working Tree: On Windows (win32), readyapi/ap-e2e-soapui-project.xml has Windows CRLF line endings (\r\n).
+   - Diff Comparison:
+     - With Whitespace Ignored (git diff --ignore-space-at-eol):
 
-If you discover any unexpected changes or sensitive content, stop and report them before proceeding.
+   1     readyapi/ap-e2e-soapui-project.xml | 56 +++-----------------------------------
+   2     1 file changed, 4 insertions(+), 52 deletions(-)
+      (Only the intended 4 insertions and 52 deletions).
+     - Raw Git Diff (git diff without flags):
 
-Please provide the exact staged file list, diff summary, and any warnings.
+   1     readyapi/ap-e2e-soapui-project.xml | 2804 ++++++++++++++++++------------------
+   2     1 file changed, 1378 insertions(+), 1426 deletions(-)
+     - git diff --check Warning:
+      Every line in readyapi/ap-e2e-soapui-project.xml and readyapi/Scripts/VerifyAdHocPaymentDetails.groovy triggers a trailing whitespace warning due to the
+  carriage return character (\r).
+
+  ---
+
+  2. Impact if Staged Now
+
+  If readyapi/ap-e2e-soapui-project.xml were staged right now without normalizing line endings:
+   1. It would introduce 2,804 lines of unrelated CRLF/LF churn across the entire project file.
+   2. It would fail CI/CD linting and merge conflict checks.
+   3. It would violate the repository hygiene mandate.
+
+  ---
+
+  3. Recommended Resolution
+
+  Before running git add, we should normalize both files to Unix LF (\n):
+   1. Convert readyapi/ap-e2e-soapui-project.xml line endings from CRLF to LF.
+   2. Convert readyapi/Scripts/VerifyAdHocPaymentDetails.groovy line endings from CRLF to LF.
+   3. Verify that git diff --check returns 0 warnings.
+   4. Verify that git diff --stat readyapi/ap-e2e-soapui-project.xml reflects only the 56 substantive lines.
+   5. Then proceed with staging only those two files.
+
+  ---
+
+  4. Current Status
+   - Staged Files: 0 files staged (git diff --cached is empty).
+   - Working Tree: All local changes remain preserved.
+   - Awaiting Approval: Please confirm if you would like me to normalize the line endings to Unix LF on these two files before performing selective staging.

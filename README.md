@@ -1,40 +1,62 @@
- The feature branch has been pushed to the remote repository. Here is the confirmation report:
+Please proceed with creating the GitHub Pull Request for FPOAP-165.
 
-  ---
+Repository: aaa-ncnu/accounts-payable-invoice-processing
 
-  1. Push Results & Remote Status
+Base branch: dev
 
-   - Status: Success (100% (6/6) objects written, tracking configured).
-   - Remote Branch: origin/feature/fpoap-165-adhoc-payment-validations
-   - Remote Commit Hash: bf8b25a
-   - Upstream Tracking: feature/fpoap-165-adhoc-payment-validations -> origin/feature/fpoap-165-adhoc-payment-validations
-   - GitHub PR Creation URL:
-    https://github.com/aaa-ncnu/accounts-payable-invoice-processing/pull/new/feature/fpoap-165-adhoc-payment-validations
-  (https://github.com/aaa-ncnu/accounts-payable-invoice-processing/pull/new/feature/fpoap-165-adhoc-payment-validations)
+Feature branch: feature/fpoap-165-adhoc-payment-validations
 
-  ---
+PR Title:
+[FPOAP-165] Add ReadyAPI Ad-Hoc Payment validations for UAT 7–10
 
-  2. PR Diff Scope Against origin/dev
+PR Description:
 
-  A Pull Request opened with this branch against dev will contain strictly 1 commit and 2 files:
+Summary
 
-   1  readyapi/Scripts/VerifyAdHocPaymentDetails.groovy | 179 ++++++++++++++++++++++
-   2  readyapi/ap-e2e-soapui-project.xml                |  56 +------
-   3  2 files changed, 183 insertions(+), 52 deletions(-)
+This PR adds fixture-driven ReadyAPI SOAP validations for Ad-Hoc Payment UAT Scenarios 7–10 and extracts the existing inline assertion into a reusable Groovy script.
 
-   - Commit: bf8b25a [FPOAP-165] Add ReadyAPI Ad-Hoc Payment validations for UAT 7-10
-   - Merge Conflicts: Zero conflicts with origin/dev.
+Changes
 
-  ---
+* Added VerifyAdHocPaymentDetails.groovy.
+* Updated the ReadyAPI project XML to invoke the external script.
+* Added validation for currency, payment amount, payee, line items, financial coding, and memos.
+* UAT 7: Verify APPROVED payment status.
+* UAT 8: Verify special handling address.
+* UAT 9 and 10: Verify attachment counts and filenames.
+* Preserved existing XPath assertions.
 
-  3. Local Working Tree Status
+Test Results
 
-  All unrelated modifications and untracked files remain intact and unstaged:
-   - scripts/run_local_server.py
-   - alembic.local.ini
-   - readyapi/view_allure_report.bat
-   - Line-ending differences from Windows checkout
+* Groovy compilation: PASS
+* ReadyAPI Smoke suite: PASS
+* Python unit tests: 44 passed
+* Offline SOAP validation: UAT 7–10 passed
 
-  ---
+Note: Live Workday Sandbox E2E tests have not been executed.
 
-  No Pull Request has been created yet. Ready for your instructions on drafting the PR description or next steps.
+Jira
+
+FPOAP-165
+
+Before creating the PR:
+
+1. Verify that the base branch is dev.
+2. Confirm exactly one feature commit (bf8b25a) and two changed files.
+3. Confirm no credentials, local configurations, or unrelated changes are included.
+
+Then:
+
+1. Create the Pull Request.
+2. Do NOT merge it.
+3. Do NOT modify local files or create additional commits.
+4. Do NOT automatically assign reviewers unless required by repository rules.
+
+After creation, provide:
+
+* PR number and URL
+* PR title
+* Base and feature branches
+* CI/check status
+* Reviewer assignment status
+
+If PR creation fails because of permissions or authentication, stop and report the error.

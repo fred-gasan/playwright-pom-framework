@@ -1,32 +1,25 @@
- The local database has been started and its availability verified.
+Step 1 is complete. The local AlloyDB database is running and connectivity has been verified.
 
-  ---
+Let’s proceed with Step 2: Start and verify the local Email Service.
 
-  1. Container Status & Port Connectivity
-   - Container Name: alloydb-local
-   - Engine Image: docker.io/google/alloydbomni:15
-   - State: Running (Up 2 minutes)
-   - Port Mapping: 0.0.0.0:5432 -> 5432/tcp
-   - Socket Probe (127.0.0.1:5432): TcpTestSucceeded: True
+Please:
 
-  ---
+1. Review the existing local email service startup command and confirm it uses the correct Python virtual environment and development configuration.
+2. Start the local Email Service using the repository’s existing startup workflow.
+3. Verify that the service is running and listening on localhost:8002.
+4. If a documented health endpoint exists, perform a safe, read-only health check.
+5. Confirm that the service is connected to the local development environment and that its effective downstream endpoints do not point to production.
+6. Keep the AlloyDB container running.
+7. Do not execute ReadyAPI E2E tests, send email callbacks, create payment requests, or make Workday API calls yet.
+8. Do not modify repository files, Git branches, or commits.
+9. Do not display credentials, tokens, passwords, or other secrets.
 
-  2. Read-Only Database Verification Results
-   - Connection Status: SUCCESS
-   - Connected Database: ap_invoice_processing
-   - Database Engine: PostgreSQL 15.18 (AlloyDB Omni 15)
-   - Connected User: postgres
-   - Table Verification: public.processed_emails exists: True
-   - Record Integrity: 6 existing rows preserved; zero records modified, deleted, truncated, or seeded.
+After completion, report:
 
-  ---
+* Email Service startup result
+* Process and port status
+* Health check result, if available
+* Effective environment configuration
+* Any errors or blockers
 
-  3. Safety Guardrails Maintained
-   - Local Email Service: Not started (remains offline).
-   - Workday / ReadyAPI: Zero API calls made, zero E2E tests executed.
-   - Git State: Zero modifications to repository files, branches, or commits (git status unchanged).
-   - Credentials: No passwords or secrets displayed.
-
-  ---
-
-  Ready for your next instruction.
+If the service cannot start safely, stop and report the issue rather than changing code or configuration automatically.

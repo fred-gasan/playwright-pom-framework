@@ -1,62 +1,33 @@
-Please proceed with creating the GitHub Pull Request for FPOAP-165.
+ GitHub Pull Request #234 has been created.
 
-Repository: aaa-ncnu/accounts-payable-invoice-processing
+  ---
 
-Base branch: dev
+  1. Pull Request Details
 
-Feature branch: feature/fpoap-165-adhoc-payment-validations
+   - PR Number: #234 (https://github.com/aaa-ncnu/accounts-payable-invoice-processing/pull/234)
+   - PR URL: https://github.com/aaa-ncnu/accounts-payable-invoice-processing/pull/234 (https://github.com/aaa-ncnu/accounts-payable-invoice-processing/pull/234)
+   - Title: [FPOAP-165] Add ReadyAPI Ad-Hoc Payment validations for UAT 7–10
+   - Base Branch: dev
+   - Feature Branch: feature/fpoap-165-adhoc-payment-validations
+   - PR State: open (Not merged)
+   - Reviewer Assignment: None assigned (No automatic reviewers requested)
 
-PR Title:
-[FPOAP-165] Add ReadyAPI Ad-Hoc Payment validations for UAT 7–10
+  ---
 
-PR Description:
+  2. CI & Check Status
 
-Summary
+   - Commit SHA: bf8b25a
+   - Combined Commit State: pending (Queued / waiting for Cloud Build CI trigger)
+   - GitHub Check Runs: No check run failures reported
 
-This PR adds fixture-driven ReadyAPI SOAP validations for Ad-Hoc Payment UAT Scenarios 7–10 and extracts the existing inline assertion into a reusable Groovy script.
+  ---
 
-Changes
+  3. Verification Confirmations
 
-* Added VerifyAdHocPaymentDetails.groovy.
-* Updated the ReadyAPI project XML to invoke the external script.
-* Added validation for currency, payment amount, payee, line items, financial coding, and memos.
-* UAT 7: Verify APPROVED payment status.
-* UAT 8: Verify special handling address.
-* UAT 9 and 10: Verify attachment counts and filenames.
-* Preserved existing XPath assertions.
-
-Test Results
-
-* Groovy compilation: PASS
-* ReadyAPI Smoke suite: PASS
-* Python unit tests: 44 passed
-* Offline SOAP validation: UAT 7–10 passed
-
-Note: Live Workday Sandbox E2E tests have not been executed.
-
-Jira
-
-FPOAP-165
-
-Before creating the PR:
-
-1. Verify that the base branch is dev.
-2. Confirm exactly one feature commit (bf8b25a) and two changed files.
-3. Confirm no credentials, local configurations, or unrelated changes are included.
-
-Then:
-
-1. Create the Pull Request.
-2. Do NOT merge it.
-3. Do NOT modify local files or create additional commits.
-4. Do NOT automatically assign reviewers unless required by repository rules.
-
-After creation, provide:
-
-* PR number and URL
-* PR title
-* Base and feature branches
-* CI/check status
-* Reviewer assignment status
-
-If PR creation fails because of permissions or authentication, stop and report the error.
+   - Commit Scope: Contains exactly one commit (bf8b25a) with zero merge conflicts against dev.
+   - Files Changed in PR: Exactly the two intended files:
+     1. readyapi/Scripts/VerifyAdHocPaymentDetails.groovy (+179 lines)
+     2. readyapi/ap-e2e-soapui-project.xml (+4, -52 lines)
+   - Local Isolation: All local modifications (scripts/run_local_server.py, line-ending checkouts) and untracked files (alembic.local.ini, view_allure_report.bat)
+     remain completely untouched in your local working tree.
+   - Safety: No secrets, credentials, or production data modifications were included.

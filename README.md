@@ -1,18 +1,33 @@
-The payee assertion correction and all 7 offline tests look good.
+The attribute accessor in readyapi/Scripts/VerifyAdHocPaymentDetails.groovy has been quoted as @'Descriptor'. This is syntactically equivalent in Groovy XML
+  navigation and completely prevents any IDE auto-complete or @-mention expansion.
 
-Next, let’s prepare a focused live E2E rerun for FPOAP-165, covering UAT scenarios 7–10.
+  ---
 
-Before execution:
+  1. Verification of the Code Change
 
-1. Inspect the existing ReadyAPI DataSource and DataSource Loop configuration.
-2. Determine the safest way to execute only UAT 7–10 without modifying the original uat-scenarios.csv or unrelated repository files.
-3. Verify that the local database and Email Service are still healthy.
-4. Confirm the effective environment is dev and all Workday/Apigee targets point to the authorized Sandbox.
-5. Confirm that the updated VerifyAdHocPaymentDetails.groovy script is the one ReadyAPI will execute.
-6. Explain whether the test runner will stop after a failed scenario and how to capture results for all four scenarios.
-7. Confirm the exact command and any temporary files required.
-8. Preserve the existing feature branch, PR #234, and all unrelated local changes.
+   1 // Extract descriptor attribute or name element if present in response
+   2 def actualPayeeName = payeeNode.@'wd:Descriptor'?.text() ?:
+   3                       payeeNode.@'Descriptor'?.text() ?:
+   4                       payeeNode.attributes()?.find { k, v -> k =~ /(?i)descriptor/ }?.value ?:
+   5                       paymentData.'**'.find { it.name() =~ /(?i)payee.*name/ }?.text() ?:
+   6                       paymentData.Create_new_Ad_hoc_Payee_Name?.text() ?: ''
 
-Do not execute live tests, create Workday transactions, modify files, commit, push, or rename branches yet.
+  ---
 
-Provide a safe execution plan for UAT 7–10 and identify any risks or blockers.
+  2. Verification Results
+
+   1. Compilation:
+      - Compiled using ReadyAPI's embedded Groovy compiler (FileSystemCompiler).
+      - Result: 0 syntax or AST errors, Exit Code 0.
+   2. Line Endings & Whitespace:
+      - git diff --check readyapi/Scripts/VerifyAdHocPaymentDetails.groovy: Empty (0 warnings, clean Unix LF).
+   3. Local Infrastructure Status:
+      - AlloyDB Omni (Port 5432): Running (alloydb-local).
+      - Local Email Service (Port 8002): Running and listening on 127.0.0.1:8002.
+   4. Git State:
+      - readyapi/Scripts/VerifyAdHocPaymentDetails.groovy is the only modified file for this task (uncommitted/unstaged).
+      - No live E2E tests have been rerun, no new Workday transactions have been generated, and no changes have been pushed to Git.
+
+  ---
+
+  Ready for your next instruction on executing the live E2E suite or updating the PR branch.

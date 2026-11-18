@@ -1,28 +1,57 @@
-I approve creating the replacement Pull Request with the proposed title and description.
+Replacement Pull Request #237 has been created on GitHub.
 
-Please proceed with the following safeguards:
+  ---
 
-1. Create a new PR in aaa-ncnu/accounts-payable-invoice-processing.
-2. Base branch: dev
-3. Head branch: feature/fpoap-165/dev
-4. Title: [FPOAP-165] Add ReadyAPI Ad-Hoc Payment validations for UAT 7–10
-5. Use the proposed PR description, including the reference to PR #234, local E2E results (4/4 PASS, 203/203 assertions), and successful Cloud Build check.
-6. Explicitly retain the limitation that Workday Approved status for UAT 7 remains unverified at the SOAP layer.
-7. Also clarify that when Workday omits the payee descriptor, the test verifies payee reference integrity but does not independently verify the expected payee name.
-8. Verify the PR contains exactly the intended two files:
-    * readyapi/Scripts/VerifyAdHocPaymentDetails.groovy
-    * readyapi/ap-e2e-soapui-project.xml
-9. Verify that the PR contains the original implementation commit and the latest correction commit dfd0218.
-10. Confirm the PR targets dev and that CI checks are successful.
+  1. Pull Request Details
 
-Important:
+   - PR Number: #237 (https://github.com/aaa-ncnu/accounts-payable-invoice-processing/pull/237)
+   - PR URL: https://github.com/aaa-ncnu/accounts-payable-invoice-processing/pull/237 (https://github.com/aaa-ncnu/accounts-payable-invoice-processing/pull/237)
+   - Title: [FPOAP-165] Add ReadyAPI Ad-Hoc Payment validations for UAT 7–10
+   - Base Branch: dev
+   - Head Branch: feature/fpoap-165/dev
+   - State: open (Not merged)
 
-* Do not modify source files.
-* Do not create additional commits.
-* Do not run live E2E tests again.
-* Do not delete branches.
-* Do not close or modify PR #234 yet.
-* Do not merge the new PR.
-* Preserve all unrelated local changes.
+  ---
 
-After creating the PR, provide the new PR number, URL, base/head branches, commit list, changed-file summary, and CI status.
+  2. Commits & File Changes
+
+  Commits in PR (2 commits):
+   1. bf8b25a: [FPOAP-165] Add ReadyAPI Ad-Hoc Payment validations for UAT 7-10
+   2. dfd0218: [FPOAP-165] Fix payee reference validation and handle missing status in Ad-Hoc SOAP response
+
+  Files Changed (2 files):
+   - readyapi/Scripts/VerifyAdHocPaymentDetails.groovy (+204, -0)
+   - readyapi/ap-e2e-soapui-project.xml (+4, -52)
+
+  ---
+
+  3. CI & Check Status
+
+   - Cloud Build Check Run: accounts-payable-invoice-processing-dev (aaa-web-services-dev)
+   - Check Run ID: 134960771938 (https://github.com/aaa-ncnu/accounts-payable-invoice-processing/runs/134960771938)
+   - Status: completed
+   - Conclusion: success 🟢 (All unit tests, packaging, and linting checks passed).
+
+  ---
+
+  4. Verification & Scope Disclosures Included in PR #237
+
+   - Cross-Reference: Explicitly states that PR #237 supersedes PR #234 to align with the /dev branch suffix required for GCP Cloud Build CI triggers.
+   - Live E2E Results: Documents the 100% PASS across all 4 Ad-Hoc scenarios (203/203 assertions passed) against the Workday Sandbox Company 100.
+   - Payee Disclosure: Explicitly notes that when Workday omits the descriptor attribute on Payee_Reference, the test validates Workday reference ID integrity
+     (Ad_hoc_Payee_ID / WID) rather than the expected text string at the SOAP layer.
+   - Status Disclosure: Explicitly notes that Workday Cash Management Get_Ad_hoc_Payments response does not expose a Document Status field, and that UAT 7 Workday
+     Approved business status remains documented as unverified at the SOAP layer.
+
+  ---
+
+  5. Repository & Local Safeguard Confirmations
+
+   - PR #234: Preserved and remains open (not closed or modified).
+   - Branch Retention: No local or remote branches were deleted or renamed.
+   - Local Working Tree: scripts/run_local_server.py, alembic.local.ini, view_allure_report.bat, and line-ending differences remain completely untouched and
+     unstaged.
+
+  ---
+
+  Ready for your instructions regarding closing PR #234 or requesting reviewers.

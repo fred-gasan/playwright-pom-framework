@@ -1,57 +1,29 @@
-Replacement Pull Request #237 has been created on GitHub.
+PR #237 has been created successfully, and Cloud Build CI passed.
 
-  ---
+Please complete the PR transition:
 
-  1. Pull Request Details
+1. Verify PR #237 is open, targets dev, and has successful CI checks.
+2. Add the following comment to PR #234:
 
-   - PR Number: #237 (https://github.com/aaa-ncnu/accounts-payable-invoice-processing/pull/237)
-   - PR URL: https://github.com/aaa-ncnu/accounts-payable-invoice-processing/pull/237 (https://github.com/aaa-ncnu/accounts-payable-invoice-processing/pull/237)
-   - Title: [FPOAP-165] Add ReadyAPI Ad-Hoc Payment validations for UAT 7–10
-   - Base Branch: dev
-   - Head Branch: feature/fpoap-165/dev
-   - State: open (Not merged)
+“Superseded by #237 to follow the required /dev branch naming convention and enable Cloud Build CI. The updated PR includes the latest validation fixes, successful local UAT 7–10 E2E results, and passing CI checks. Please continue review on #237.”
 
-  ---
+3. After the comment is successfully posted, close PR #234 as superseded, without merging it.
+4. Do not delete any branches.
+5. Do not modify PR #237 or merge it.
+6. Preserve all local changes.
 
-  2. Commits & File Changes
+Report the final state of both PRs.
 
-  Commits in PR (2 commits):
-   1. bf8b25a: [FPOAP-165] Add ReadyAPI Ad-Hoc Payment validations for UAT 7-10
-   2. dfd0218: [FPOAP-165] Fix payee reference validation and handle missing status in Ad-Hoc SOAP response
 
-  Files Changed (2 files):
-   - readyapi/Scripts/VerifyAdHocPaymentDetails.groovy (+204, -0)
-   - readyapi/ap-e2e-soapui-project.xml (+4, -52)
 
-  ---
+Hi Lily and Billy, quick update on FPOAP-165.
 
-  3. CI & Check Status
+I’ve created the updated PR #237 with the required /dev branch naming convention, and Cloud Build CI is now passing.
 
-   - Cloud Build Check Run: accounts-payable-invoice-processing-dev (aaa-web-services-dev)
-   - Check Run ID: 134960771938 (https://github.com/aaa-ncnu/accounts-payable-invoice-processing/runs/134960771938)
-   - Status: completed
-   - Conclusion: success 🟢 (All unit tests, packaging, and linting checks passed).
+I also reran the ReadyAPI UAT 7–10 scenarios locally against the Workday Sandbox. All four scenarios passed (203/203 assertions).
 
-  ---
+One limitation is documented in the PR: Workday’s SOAP response doesn’t expose the payment approval status, so UAT 7’s Approved status remains unverified at the SOAP layer.
 
-  4. Verification & Scope Disclosures Included in PR #237
+PR: https://github.com/aaa-ncnu/accounts-payable-invoice-processing/pull/237
 
-   - Cross-Reference: Explicitly states that PR #237 supersedes PR #234 to align with the /dev branch suffix required for GCP Cloud Build CI triggers.
-   - Live E2E Results: Documents the 100% PASS across all 4 Ad-Hoc scenarios (203/203 assertions passed) against the Workday Sandbox Company 100.
-   - Payee Disclosure: Explicitly notes that when Workday omits the descriptor attribute on Payee_Reference, the test validates Workday reference ID integrity
-     (Ad_hoc_Payee_ID / WID) rather than the expected text string at the SOAP layer.
-   - Status Disclosure: Explicitly notes that Workday Cash Management Get_Ad_hoc_Payments response does not expose a Document Status field, and that UAT 7 Workday
-     Approved business status remains documented as unverified at the SOAP layer.
-
-  ---
-
-  5. Repository & Local Safeguard Confirmations
-
-   - PR #234: Preserved and remains open (not closed or modified).
-   - Branch Retention: No local or remote branches were deleted or renamed.
-   - Local Working Tree: scripts/run_local_server.py, alembic.local.ini, view_allure_report.bat, and line-ending differences remain completely untouched and
-     unstaged.
-
-  ---
-
-  Ready for your instructions regarding closing PR #234 or requesting reviewers.
+The previous PR #234 is being superseded. Please use #237 for review. Thanks!

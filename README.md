@@ -1,55 +1,54 @@
-Branch Creation & Safety Verification Report: feature/fpoap-182/dev
+The new feature branch feature/fpoap-182/dev has been successfully created from the latest origin/dev.
 
-  The conflict resolution and branch creation have been completed in strict accordance with the safeguards.
+We are still awaiting clarification from Liliana regarding the discrepancies between FPOAP-182 acceptance criteria and the implemented GET API contract.
 
-  ---
+Meanwhile, proceed with detailed test design and implementation planning based on the current branch.
 
-  1. AllureListener.groovy Conflict Resolution Summary
+1. Verify the current branch and inspect the latest source code from the new HEAD.
+2. Revalidate the previous API contract findings against the latest dev implementation.
+3. Review the existing InvoiceToWorkday test case, UAT 7–10 scenarios, DataSource Loop, Groovy scripts, and Allure reporting integration.
+4. Follow the Jira implementation plan, which requests extending InvoiceToWorkday rather than creating a separate test case. If a separate test case is necessary, explain why.
+5. Identify how to add the conditional 08b-Search-AdHoc-Payment verification step without affecting existing supplier invoice scenarios.
+6. Determine how to capture the payment reference from UAT 7 and locate the exact newly created payment using the supported payee name and date range search parameters.
+7. Propose assertions for HTTP 200, JSON response structure, payment reference, exact amount, currency, payee identity, and date range.
+8. Inspect FPOAP-169 warnings implementation and existing unit tests. Identify a deterministic way to trigger a populated warnings array.
+9. Do not assume that sending warning_message automatically produces a populated warnings response.
+10. Design separate assertions for populated warnings and empty warnings arrays.
+11. Identify reusable fixtures and test steps to minimize new Workday Sandbox transactions.
+12. Propose the exact changes required for:
+    * readyapi/ap-e2e-soapui-project.xml
+    * readyapi/uat-scenarios.csv
+    * readyapi/Scripts/VerifyAdHocSearch.groovy
+    * Any additional scripts or fixtures that are strictly necessary.
+13. Identify how the new steps and scenarios will integrate with existing Allure reporting.
+14. Separate confirmed requirements from pending clarification, particularly unsupported payment_reference and supplier_id query parameters and limit/offset pagination.
+15. Provide an offline and live E2E validation strategy, including regression coverage for existing scenarios.
 
-   - Pre-Restoration Verification:
-     - git diff --ignore-space-at-eol HEAD -- readyapi/Scripts/AllureListener.groovy: Empty.
-     - git diff --cached -- readyapi/Scripts/AllureListener.groovy: Empty.
-     - Confirmed: The local file differed from HEAD strictly by CRLF/LF line endings, with zero substantive code or whitespace modifications and
-       zero staged changes.
-   - Restoration Execution:
-     - Restored strictly that single file: git restore --source=HEAD --worktree -- readyapi/Scripts/AllureListener.groovy.
-     - Verified clean status. No other files were restored, reset, or stashed.
+IMPORTANT:
 
-  ---
+* Do not modify any files yet.
+* Do not implement unsupported API parameters or change application code to satisfy test requirements.
+* Do not change Jira acceptance criteria.
+* Do not execute live API calls or create Workday transactions.
+* Do not modify branches, stage, commit, or push.
+* Preserve all unrelated local changes and credentials.
 
-  2. New Branch Creation & HEAD Verification
+Return:
+A. Confirmed API contract.
+B. Detailed test coverage matrix.
+C. Proposed ReadyAPI execution flow.
+D. Exact file-level implementation plan.
+E. Deterministic warnings test strategy.
+F. Pending requirements and blockers.
 
-   - Command Executed: git switch -c feature/fpoap-182/dev origin/dev
-   - Active Branch: feature/fpoap-182/dev
-   - Upstream Tracking: origin/dev
-   - Current HEAD Commit SHA: 45e8091a87ec230917fe87d641468fea74da276c (Matches latest origin/dev commit).
-   - Commit Details:
-    45e8091 [FPOAP-165] Add ReadyAPI Ad-Hoc Payment validations for UAT 7–10 (#237)
+Wait for approval before implementation.
 
-  ---
 
-  3. Verification of Upstream Code Integration
 
-   - FPOAP-165 Squash-Merged Changes: Verified present in HEAD.
-     - readyapi/Scripts/VerifyAdHocPaymentDetails.groovy exists and is tracked.
-     - readyapi/ap-e2e-soapui-project.xml contains the step delegation and smoke checks.
-   - Latest Upstream Code: Verified present in HEAD.
-     - AllureListener.groovy contains line 124's upstream changes ('01h2-Verify-Baseline-AdHoc-SOAP', '04b-Verify-Baseline-AdHoc-Integrity').
-     - PR #226 duplicate check test steps and data structures are present.
+Hi Liliana, I started analyzing FPOAP-182 and noticed a discrepancy between the acceptance criteria and the current API implementation.
 
-  ---
+The GET /wd-adhoc-payments endpoint supports payee_name, payment_date_on_or_after, and payment_date_on_or_before. However, the ticket mentions payment_reference, supplier_id, from_date/to_date, and limit/offset pagination.
 
-  4. Working Tree & Developer Artifact Integrity
+Should I proceed with test coverage based on the existing API implementation, or are the additional search parameters and pagination expected to be supported?
 
-   - Staged Files: 0 files staged (git diff --staged is empty).
-   - Substantive Local Edits Preserved:
-     - scripts/run_local_server.py (+46 lines for Windows selector event loop & auto-venv).
-   - Untracked Developer Files Preserved:
-     - alembic.local.ini (Local database configuration).
-     - readyapi/view_allure_report.bat (Local Allure report launcher).
-   - Unintended Changes: None. No FPOAP-182 implementation changes have been made.
-
-  ---
-
-  The new feature branch feature/fpoap-182/dev is clean, synchronized with latest origin/dev, and ready for the FPOAP-182 test design and
-  implementation whenever you approve.
+Could you please clarify? Thanks!

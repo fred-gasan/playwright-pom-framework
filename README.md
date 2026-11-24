@@ -1,38 +1,61 @@
-Thank you for the FPOAP-182 analysis.
+Stage 1 Safety Verification & Conflict Report (Pre-Branch Creation Stop)
 
-I approve creating a new feature branch named feature/fpoap-182/dev from the latest origin/dev, but we must carefully preserve all existing local changes from the previous FPOAP-165 work.
+  In strict accordance with your instruction ("If switching would overwrite or risk any existing local changes, STOP and report the conflict. Do
+  not automatically stash, reset, clean, restore, discard, or overwrite files"), I have stopped before creating or switching branches.
 
-Please proceed in two stages.
+  ---
 
-STAGE 1 — SAFETY VERIFICATION
+  1. Verification of origin/dev and PR #237 Squash-Merge
 
-1. Inspect the current working tree, including tracked, untracked, and ignored developer-specific files.
-2. Identify all local modifications that could be overwritten or carried into the new branch.
-3. Fetch the latest origin/dev without modifying the working tree.
-4. Verify that origin/dev contains the squash-merged FPOAP-165 changes from PR #237.
-5. Compare the current working tree against the target origin/dev and determine whether switching branches would overwrite any local changes.
-6. Confirm that feature/fpoap-182/dev does not already exist locally or remotely.
-7. Do not assume git checkout or git switch is safe merely because the new branch starts from origin/dev.
+   - Fetch Status: Succeeded via git fetch origin dev.
+   - Target Remote Branch Commit: 45e8091a87ec230917fe87d641468fea74da276c (origin/dev).
+   - Squash-Merge Verification: Confirmed. Commit 45e8091 on origin/dev contains the squash-merged PR #237 ([FPOAP-165] Add ReadyAPI Ad-Hoc Payment
+     validations for UAT 7–10 (#237)), which includes:
+     - readyapi/Scripts/VerifyAdHocPaymentDetails.groovy (+204 lines)
+     - readyapi/ap-e2e-soapui-project.xml (+4, -52 lines)
+   - Branch Namespace Verification: Neither feature/fpoap-182 nor feature/fpoap-182/dev exists locally or remotely. There are zero ref-locking
+     namespace conflicts.
 
-STAGE 2 — BRANCH CREATION
+  ---
 
-If and only if switching is safe without losing or overwriting local changes:
+  2. The Conflict Detected Between Working Tree and origin/dev
 
-8. Create feature/fpoap-182/dev directly from origin/dev.
-9. Verify the new branch HEAD matches the latest origin/dev commit.
-10. Verify the previous FPOAP-165 changes are present.
-11. Verify all unrelated local modifications remain intact.
-12. Confirm no FPOAP-182 implementation changes have been made.
+  We compared the 11 modified working tree files against the 53 files changed between our current HEAD (dfd0218) and the target commit origin/dev
+  (45e8091).
 
-If switching would overwrite or risk any existing local changes, STOP and report the conflict. Do not automatically stash, reset, clean, restore, discard, or overwrite files.
+  Overlapping File in Conflict:
+   - readyapi/Scripts/AllureListener.groovy
 
-IMPORTANT:
+  Why a Switch Conflict Occurs:
+   1. On origin/dev: In an upstream merge (PR #226 / FPOAP-156 duplicate checks), line 124 of readyapi/Scripts/AllureListener.groovy was updated to
+      add baseline ad-hoc step names ('01h2-Verify-Baseline-AdHoc-SOAP', '04b-Verify-Baseline-AdHoc-Integrity').
+   2. In Local Working Tree: readyapi/Scripts/AllureListener.groovy is currently dirty due to Windows CRLF line endings from checkout.
+   3. Git's Safety Rule: Because AllureListener.groovy has unstaged working tree modifications and differs between HEAD and origin/dev, Git will
+      refuse to switch or branch directly to origin/dev, aborting with:
+     error: Your local changes to the following files would be overwritten by checkout: readyapi/Scripts/AllureListener.groovy.
 
-* Do not modify application or test source code.
-* Do not stage, commit, or push.
-* Do not run ReadyAPI or live API tests.
-* Do not create Workday Sandbox transactions.
-* Do not modify credentials or environment configuration.
-* Preserve all existing local developer artifacts.
+  ---
 
-Return the branch creation result, HEAD SHA, working tree status, and any remaining risks.
+  3. Current Working Tree & Developer Artifact Status
+
+   - Current Branch: feature/fpoap-165/dev
+   - Current HEAD SHA: dfd0218
+   - Substantive Local Edits: scripts/run_local_server.py (+46 lines for local Uvicorn/Windows compatibility).
+   - Untracked Local Configs: alembic.local.ini, readyapi/view_allure_report.bat.
+   - Checkout Line-Ending Differences: 10 tracked files (including AllureListener.groovy).
+   - Status: 100% preserved. No files have been stashed, reset, restored, cleaned, or modified.
+
+  ---
+
+  4. Recommended Resolution to Safely Branch to feature/fpoap-182/dev
+
+  To safely create feature/fpoap-182/dev from origin/dev without risking any work:
+
+   - The Only Necessary Action: Normalize the line endings on readyapi/Scripts/AllureListener.groovy or restore that single file to HEAD so it is
+     clean (since it has zero local code changes, only line endings):
+     - Once readyapi/Scripts/AllureListener.groovy matches HEAD, git switch -c feature/fpoap-182/dev origin/dev will succeed seamlessly.
+     - Your local enhancements to scripts/run_local_server.py, alembic.local.ini, and view_allure_report.bat will carry over completely unharmed,
+       because origin/dev does not touch any of those files.
+
+  Please let me know if you approve restoring or normalizing readyapi/Scripts/AllureListener.groovy so we can proceed with creating
+  feature/fpoap-182/dev.

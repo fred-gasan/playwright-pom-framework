@@ -1,115 +1,80 @@
-Phase 1 Final Code Review & Hardening Report
+I approve the Phase 1 implementation and offline validation results.
 
-  ---
+Proceed with a controlled live ReadyAPI E2E execution for UAT 8 and UAT 11 ONLY.
 
-  1. Hardening of VerifyAdHocWarnings.groovy
+The creation of two persistent Ad-Hoc Payment transactions in Workday Sandbox Company 100 is explicitly authorized for this run.
 
-  The assertion logic in readyapi/Scripts/VerifyAdHocWarnings.groovy was hardened to enforce strict non-negotiable checks for Ad-Hoc scenarios:
+PRE-EXECUTION CHECKS:
 
-   1. Strict Role Separation:
-      - Only non-adhoc scenarios (Supplier Invoices Rows 1–6) are permitted to bypass warnings validation.
-      - For all Ad-Hoc scenarios, expected_warnings is strictly mandatory.
-   2. Explicit Failure for Invalid Ad-Hoc Expectations:
-      - Ad-Hoc scenario with expected_warnings = "NA" -> Fails explicitly with:
-       expected_warnings='NA' is forbidden for Ad-Hoc scenario. Must be EMPTY or POPULATED[:<substring>].
-      - Ad-Hoc scenario with blank or whitespace rule -> Fails explicitly with:
-       Missing expected_warnings rule for Ad-Hoc scenario.
-      - Ad-Hoc scenario with null rule -> Fails explicitly.
-      - Ad-Hoc scenario with POPULATED: and an empty or whitespace-only substring -> Fails explicitly with:
-       POPULATED rule specified ':' but expected substring is empty or whitespace.
-      - Any unsupported string -> Fails explicitly.
+1. Confirm the active branch is feature/fpoap-182/dev.
+2. Verify that all five intended Phase 1 file changes are present.
+3. Verify local AlloyDB and Email Service health.
+4. Confirm that the local services are running against the correct branch and environment.
+5. Verify ReadyAPI configuration, authentication, and endpoint connectivity.
+6. Confirm the target is Workday Sandbox Company 100 via Apigee Dev, not production.
+7. Verify UAT 11 fixture integrity, attachment availability, and expected_warnings configuration.
+8. Verify that the reused PDF fixture and its alias filename are handled correctly by the existing attachment validation logic.
 
-  Offline Unit Test Verification (17 Test Cases):
-  Executed headlessly via ReadyAPI Groovy runtime:
-   - Positive Valid Cases: Populated with substring match (Pass), Clean Empty array [] (Pass), Invoice scenario with NA (Pass), Invoice with empty
-     rule (Pass).
-   - Structural Failure Cases: Missing warnings key (Fail), Null warnings (Fail), String instead of array (Fail), Integer entry in array (Fail).
-   - Content & Expectation Failure Cases: Missing substring in populated array (Fail), Populated array when EMPTY expected (Fail), Empty array when
-     POPULATED expected (Fail), Invalid rule string (Fail).
-   - New Edge Cases Verified:
-     - Case 13: Ad-Hoc with NA -> 🟢 Expectedly Failed
-     - Case 14: Ad-Hoc with blank string -> 🟢 Expectedly Failed
-     - Case 15: Ad-Hoc with null -> 🟢 Expectedly Failed
-     - Case 16: Ad-Hoc with POPULATED: (empty substring) -> 🟢 Expectedly Failed
-     - Case 17: Ad-Hoc with POPULATED:    (whitespace substring) -> 🟢 Expectedly Failed
-   - Result: 17 / 17 test cases passed (100% success).
+SCOPED EXECUTION:
 
-  ---
+9. Create a temporary scoped CSV containing the exact updated six-column header and only UAT 8 and UAT 11.
+10. Use the existing fixture_root override mechanism without modifying the tracked uat-scenarios.csv.
+11. Execute the existing E2E-Reference / InvoiceToWorkday test case.
+12. Store reports in a new isolated directory, such as readyapi/reports/run-fpoap-182-phase1.
+13. Preserve all previous test reports.
 
-  2. CSV Backward Compatibility & Consumer Analysis
+EXPECTED VALIDATION:
 
-   - Repository Search for Consumers:
-    A comprehensive grep search for uat-scenarios.csv across the entire workspace confirmed:
-     - Zero Python consumers: No application routers, services, or test scripts parse uat-scenarios.csv.
-     - Zero CI / Cloud Build scripts: Cloud Build pipelines (cloudbuild.auto.yaml, .github/workflows/unit-tests.yml) do not parse this file.
-     - Single Consumer: readyapi/ap-e2e-soapui-project.xml (DataSource test step and 00-Check-ProjectFiles).
-   - Data Integrity Validation across all 11 Rows:
-     - Automated Python CSV parser validated:
-       - Exactly 6 columns in header.
-       - Exactly 6 columns in every data row.
-       - Every referenced fixture_path exists on disk.
-       - Rows 1–6 (Invoices): expected_warnings = NA
-       - Row 7 (UAT 7): POPULATED:Please Enter Address Details
-       - Row 8 (UAT 8): EMPTY
-       - Rows 9 & 10 (UAT 9 & 10): POPULATED:Please Enter Address Details
-       - Row 11 (UAT 11): POPULATED:Please Enter Address Details
+UAT 8:
 
-  ---
+* POST returns HTTP 200.
+* payment_id is present.
+* warnings property exists and is a JSON array.
+* warnings array is strictly empty.
+* All existing SOAP, attachment, and database audit validations pass.
 
-  3. Payload Builder Regression Analysis
+UAT 11:
 
-  We executed BuildAdHocPaymentRequest.groovy offline across all Ad-Hoc fixtures:
-   - UAT 7, 8, 9, and 10:
-    Confirmed that when warning_message is absent from the fixture, requestBody.payment_data completely excludes warning_message.
-    Existing payload structures remain 100% unchanged.
-   - UAT 11 (adhoc-payment-uat-scenario-11.json):
-     - Contains unique scenario identification: payee_name = "Apex Advisory Group LLC", memo = "UAT 11 Adhoc Payment Warning Review".
-     - Reuses existing binary fixture fixtures/uat/adhoc-payment-uat-scenario-7.pdf with alias filename adhoc-payment-uat-scenario-11.pdf.
-     - Confirmed: warning_message is properly populated into payment_data.warning_message ("DW Warning: Review required by AP specialist -
-       suspected duplicate review").
+* POST returns HTTP 200.
+* payment_id is present.
+* warnings property exists and is a JSON array.
+* Every warning entry is a string.
+* warnings array is populated.
+* At least one warning contains “Please Enter Address Details”.
+* The outgoing POST payload contains the expected warning_message.
+* All existing SOAP, attachment, and database audit validations pass.
 
-  ---
+POST-EXECUTION VERIFICATION:
 
-  4. Final Scoped Diff Review
+14. Inspect actual per-scenario results and assertion counts. Do not rely solely on the TestRunner exit code.
+15. Report the actual warnings arrays returned for both scenarios.
+16. Report the created Workday payment IDs.
+17. Verify local database cleanup according to the existing framework behavior.
+18. Verify Allure and JUnit report generation.
+19. Confirm that no tracked configuration or fixture files were unintentionally modified during execution.
 
-  The working tree changes for Phase 1 are strictly confined to these 5 files:
+SAFETY RULES:
 
-   1  readyapi/Scripts/BuildAdHocPaymentRequest.groovy         |  4 +
-   2  readyapi/Scripts/VerifyAdHocWarnings.groovy             | 59 ++++++++++++++++++
-   3  readyapi/ap-e2e-soapui-project.xml                      | 16 +++++-
-   4  readyapi/fixtures/uat/adhoc-payment-uat-scenario-11.json| 35 +++++++++++
-   5  readyapi/uat-scenarios.csv                              | 23 ++++----
-   6  5 files changed, 125 insertions(+), 12 deletions(-)
+* Run only UAT 8 and UAT 11.
+* Do not run UAT 1–7, 9, or 10.
+* Do not automatically rerun failed scenarios.
+* If any scenario fails, investigate the recorded evidence and report the root cause before requesting another live run.
+* Do not weaken assertions to make tests pass.
+* Do not implement Phase 2 GET search coverage.
+* Do not modify application source code or credentials.
+* Do not stage, commit, or push.
+* Preserve all unrelated local changes.
+* Redact credentials and sensitive authentication information from reports.
 
-   - Line Endings & Whitespace: git diff --check output is completely empty (all files normalized to pure Unix LF).
-   - Assertion Safety:
-     - 05-Submit-AdHocPayment: Existing assertions (HTTP 200, payment_id present) are untouched.
-     - 09b-Verify-AdHocPayment-SOAP: All FPOAP-165 assertions in VerifyAdHocPaymentDetails.groovy remain untouched.
-     - Supplier invoice execution steps remain untouched.
-   - Hygiene: Zero credentials, zero test report artifacts, and zero compilation .class files are staged or uncommitted.
-   - Preserved Files: scripts/run_local_server.py, alembic.local.ini, readyapi/view_allure_report.bat, and line-ending checkouts remain completely
-     untouched.
+Return:
 
-  ---
+A. Environment readiness.
+B. Exact scoped execution command.
+C. Per-scenario PASS/FAIL results.
+D. Actual warnings response evidence.
+E. Assertion counts and execution duration.
+F. Created Sandbox payment IDs.
+G. Database cleanup and report locations.
+H. Any failures, risks, or unexpected behavior.
 
-  5. Smoke & Regression Status
-
-   - ReadyAPI Smoke Test Suite (ProjectLoads): 🟢 PASS in 1,710 ms.
-   - ReadyAPI Groovy Compiler (FileSystemCompiler): 🟢 0 errors, Exit Code 0.
-   - Python Application Regression (test_adhoc_payments.py): 🟢 32 passed in 3.39s.
-
-  ---
-
-  6. Readiness for Controlled Live Sandbox Run
-
-  Phase 1 is fully implemented, verified, and ready for live Workday Sandbox verification.
-
-  > Live Sandbox Execution Notice:
-  > Executing the live E2E suite will create new persistent Ad-Hoc Payment transactions in Workday Sandbox Company 100 for each executed row.
-  > To minimize Sandbox transactions, we can scope the run specifically to:
-  > - UAT 8: Verifies EMPTY warnings array.
-  > - UAT 11: Verifies POPULATED warnings array with warning_message propagation.
-  >
-  > Or execute the full 11-scenario suite (Rows 1–11) to confirm end-to-end regression across both Supplier Invoices and Ad-Hoc Payments.
-
-  Awaiting your decision on how you would like to proceed with live execution.
+Stop after this single controlled live execution and wait for further approval.
